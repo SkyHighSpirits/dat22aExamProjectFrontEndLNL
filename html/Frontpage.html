@@ -6,8 +6,55 @@
     <link rel="stylesheet" href="../css/Frontpage_style.css">
     <link rel="stylesheet" href="../css/NavbarStyle.css">
     <link rel="stylesheet" href="../css/Footer.css">
+    <link rel="stylesheet" href="../css/global_style.css">
 </head>
 <body>
+
+<div class="contact-section">
+
+    <div class="direct-contact">
+        <form action="/send-email" method="post">
+            <h3 id="header-direct">Send en besked til os</h3>
+            <input type="text" id="name" name="name" placeholder="Navn" required>
+            <input type="text" id="email" name="email" placeholder="Email" required>
+            <input type="text" id="city" name="city" placeholder="By" required>
+            <br>
+            <br>
+            <input class="about" type="text" id="about" name="about" placeholder="Emne" required>
+            <button class="sendbutton" type="submit">Send Besked</button>
+            <br>
+            <textarea id="message" name="message" placeholder="Besked" required></textarea>
+            <br>
+
+        </form>
+    </div>
+    <div class="or">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h3>Eller</h3>
+    </div>
+
+    <div class="phone-contact">
+        <h3>Ring os op</h3>
+        <br>
+        <p>Hverdage</p>
+        <p>08:00-16:00</p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p>Tlf. Nr.</p>
+        <p id="phone_number">xx xx xx xx</p>
+
+    </div>
+</div>
 
 </body>
 <script type="module" src="../javascript/Frontpage.js" defer></script>
