@@ -1,11 +1,3 @@
-/*document.addEventListener("DOMContentLoaded", function () {
-callNavbarTemplate()
-callNavbarTemplate()
-
-});
-*/
-
-
 function callNavbarTemplate() {
 
     // Load the navbar HTML content
