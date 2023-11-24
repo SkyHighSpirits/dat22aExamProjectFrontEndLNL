@@ -1,10 +1,8 @@
 import { callNavbarTemplate, callFooterTemplate, changeToKontakt, changeToForside, changeToYdelser, changeToPortefolje, changeToOmMig } from "./template.js";
 
 document.addEventListener("DOMContentLoaded", function () {
-    //callNavbarTemplate()
+    callNavbarTemplate()
     callFooterTemplate()
-});
-
 const pbForsideButton = document.getElementById("pbForsideButton")
 const pbPortefoljeButton = document.getElementById("pbPortefoljeButton")
 const pbYdelserButton = document.getElementById("pbYdelserButton")
@@ -40,9 +38,11 @@ contactForm.addEventListener("submit", function (event) {
             console.log('An error occurred:', error);
         });
 
-        pbForsideButton.addEventListener('click', changeToForside)
-        pbPortefoljeButton.addEventListener('click', changeToPortefolje)
-        pbYdelserButton.addEventListener('click', changeToYdelser)
-        pbOmMigButton.addEventListener('click', changeToOmMig)
-        pbKontaktButton.addEventListener('click', changeToKontakt)
+});
+
+pbForsideButton.addEventListener('click', changeToForside)
+pbPortefoljeButton.addEventListener('click', changeToPortefolje)
+pbYdelserButton.addEventListener('click', changeToYdelser)
+pbOmMigButton.addEventListener('click', changeToOmMig)
+pbKontaktButton.addEventListener('click', changeToKontakt)
 });
