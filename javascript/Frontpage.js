@@ -19,6 +19,7 @@ contactForm.addEventListener("submit", function (event) {
         method: 'POST',
         body: requestData,
         headers: {
+            //'Authentication'
             'Content-Type': 'application/x-www-form-urlencoded',
         },
     })
@@ -27,7 +28,8 @@ contactForm.addEventListener("submit", function (event) {
                 console.log('Email sent successfully!');
             } else {
                 console.log(response);
-                console.log('Failed to send email.');
+                alert("Failed to send email, server is too busy, try again in 3 seconds")
+                console.log('Failed to send email');
             }
         })
         .catch(error => {
