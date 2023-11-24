@@ -1,4 +1,16 @@
+/* Frontpage image css start */
+.frontImage-container{
+    width: 100%;
+    height: 700px;
+}
 
+.frontPageImage{
+    width: 100vw;
+    height:720px;
+}
+/* Frontpage image css end */
+
+/* Contact form css start */
 .contact-section
 {
     display: flex;
@@ -84,6 +96,7 @@
         padding: 5px;
         border-radius: 5px;
     }
+    /* Contact form css end */
 
 
 
