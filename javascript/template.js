@@ -40,4 +40,4 @@ function changeToForside() {
     wundow.location.replace("Frontpage.html")
 }
 
-export{callNavbarTemplate, callFooterTemplate, changeToForside, changeToKontakt, changeToOmMig, changeToPortefolje, changeToYdelser};
+export{callNavbarTemplate, callFooterTemplate};
