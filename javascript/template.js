@@ -20,4 +20,24 @@ function callFooterTemplate() {
     });
 }
 
-export{callNavbarTemplate, callFooterTemplate};
+function changeToKontakt() {
+    window.location.replace("KontaktPage.html");
+}
+
+function changeToOmMig() {
+    window.location.replace("OmMigPage.html");
+}
+
+function changeToYdelser() {
+    window.location.replace("YdelserPage.html");
+}
+
+function changeToPortefolje() {
+    window.location.replace("PorteFøljePage.html");
+}
+
+function changeToForside() {
+    window.location.replace("Frontpage.html");
+}
+
+export{callNavbarTemplate, callFooterTemplate, changeToKontakt, changeToOmMig, changeToPortefolje, changeToYdelser, changeToForside};
