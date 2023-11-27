@@ -69,3 +69,4 @@ function changeToForside() {
 }
 
 export { callNavbarTemplate, callFooterTemplate, changeToForside, changeToKontakt, changeToOmMig, changeToPortefolje, changeToYdelser };
+

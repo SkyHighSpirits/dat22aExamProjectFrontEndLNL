@@ -6,3 +6,4 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Ingen yderligere kode er nødvendig her for navigation, da det håndteres i template.js
+

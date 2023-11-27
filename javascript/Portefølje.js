@@ -7,3 +7,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Alle event listeners for navigationsknapper er nu håndteret i template.js
 // Derfor er der ikke behov for yderligere kode her til at tilføje event listeners
+
