@@ -3,42 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Side</title>
-    <link rel="stylesheet" href="../css/NavbarStyle.css">
-    <link rel="stylesheet" href="../css/Footer.css">
-    <link rel="stylesheet" href="../css/global_style.css">
-    <!-- Tilføj yderligere CSS her om nødvendigt -->
+    <title>Administration</title>
+    <link rel="stylesheet" href="../css/Admin_style.css">
 </head>
 <body>
-<h1>Admin Panel</h1>
+<h1>Administration</h1>
 
-<!-- En simpel tabel til at vise data -->
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Brugernavn</th>
-        <th>Rolle</th>
-        <th>Handlinger</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- Række data her -->
-    <tr>
-        <td>1</td>
-        <td>Bruger1</td>
-        <td>Admin</td>
-        <td>
-            <button>Rediger</button>
-            <button>Slet</button>
-        </td>
-    </tr>
-    <!-- Flere rækker kan tilføjes her -->
-    </tbody>
-</table>
+<!-- Portefølje Sektion -->
+<div class="section">
+    <h2>Portefølje</h2>
+    <button id="showPortfolioOverviewBtn">Oversigt</button>
+    <button id="addPortfolioBtn">Tilføj</button>
+    <button id="deletePortfolioBtn">Slet</button>
 
-<!-- Du kan tilføje flere admin-specifikke funktioner her -->
+    <!-- Portefølje Oversigt Sektion -->
+    <div id="portfolioOverview" style="display:none;">
+        <!-- Dynamisk indhold for portefølje oversigt -->
+        <button id="backFromPortfolioOverview">Tilbage</button>
+    </div>
 
-<script type="module" src="../javascript/Admin.js" defer></script>
+    <!-- Tilføj Portefølje Formular -->
+    <div id="addPortfolioForm" style="display:none;">
+        <form id="newPortfolioForm">
+            <label for="portfolioDescription">Beskrivelse:</label>
+            <input type="text" id="portfolioDescription" name="description" required><br><br>
+
+            <label for="portfolioImage1">Billede 1:</label>
+            <input type="file" id="portfolioImage1" name="image1"><br><br>
+
+            <label for="portfolioImage2">Billede 2:</label>
+            <input type="file" id="portfolioImage2" name="image2"><br><br>
+
+            <label for="portfolioImage3">Billede 3:</label>
+            <input type="file" id="portfolioImage3" name="image3"><br><br>
+
+            <button type="submit">Tilføj</button>
+            <button type="button" id="backFromAddPortfolio">Tilbage</button>
+        </form>
+    </div>
+
+    <!-- Slet Portefølje Sektion -->
+    <div id="deletePortfolioSection" style="display:none;">
+        <!-- Dynamisk indhold for sletning af portefølje-emner -->
+        <!-- Eksempel: -->
+        <!-- <div class="portfolioItem">
+            <span>Portefølje Beskrivelse</span>
+            <button class="deletePortfolioItemBtn">Slet</button>
+        </div> -->
+        <button id="backFromDeletePortfolio">Tilbage</button>
+    </div>
+</div>
+
+<!-- Ydelser Sektion -->
+<div class="section">
+    <h2>Ydelser</h2>
+    <button id="showServicesOverviewBtn">Oversigt</button>
+    <button id="addServiceBtn">Tilføj</button>
+    <button id="deleteServiceBtn">Slet</button>
+
+    <!-- Ydelser Oversigt Sektion -->
+    <div id="servicesOverview" style="display:none;">
+        <!-- Dynamisk indhold for ydelser oversigt -->
+        <button id="backFromServicesOverview">Tilbage</button>
+    </div>
+
+    <!-- Tilføj Ydelse Formular -->
+    <div id="addServiceForm" style="display:none;">
+        <form id="newServiceForm">
+            <label for="serviceDescription">Beskrivelse:</label>
+            <input type="text" id="serviceDescription" name="description" required><br><br>
+
+            <label for="serviceImage">Billede:</label>
+            <input type="file" id="serviceImage" name="image"><br><br>
+
+            <button type="submit">Tilføj</button>
+            <button type="button" id="backFromAddService">Tilbage</button>
+        </form>
+    </div>
+
+    <!-- Slet Ydelse Sektion -->
+    <div id="deleteServiceSection" style="display:none;">
+        <!-- Dynamisk indhold for sletning af ydelser -->
+        <!-- Eksempel: -->
+        <!-- <div class="serviceItem">
+            <span>Ydelse Beskrivelse</span>
+            <button class="deleteServiceItemBtn">Slet</button>
+        </div> -->
+        <button id="backFromDeleteService">Tilbage</button>
+    </div>
+</div>
+
+<!-- Company Sektion -->
+<div class="section">
+    <h2>Company</h2>
+    <button id="showCompanyOverviewBtn">Oversigt</button>
+    <button id="updateCompanyBtn">Opdater</button>
+
+    <!-- Company Oversigt Sektion -->
+    <div id="companyOverview" style="display:none;">
+        <!-- Dynamisk indhold for company oversigt -->
+        <button id="backFromCompanyOverview">Tilbage</button>
+    </div>
+
+    <!-- Opdater Company Formular -->
+    <div id="updateCompanyForm" style="display:none;">
+        <form id="companyForm">
+            <label for="companyTitle">Company Titel:</label>
+            <input type="text" id="companyTitle" name="title" required><br><br>
+
+            <label for="companyDescription">Beskrivelse:</label>
+            <textarea id="companyDescription" name="description" required></textarea><br><br>
+
+            <label for="companyCVR">CVR Nummer:</label>
+            <input type="text" id="companyCVR" name="cvr" required><br><br>
+
+            <button type="submit">Opdater</button>
+            <button type="button" id="backFromUpdateCompany">Tilbage</button>
+        </form>
+    </div>
+</div>
+
+<script src="../javascript/Admin.js"></script>
 </body>
 </html>
+
+
+
