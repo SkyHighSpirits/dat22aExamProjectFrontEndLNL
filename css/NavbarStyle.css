@@ -16,14 +16,13 @@ nav{
     height: 100px;
     width: 100%;
     z-index: 4;
-    border: solid 2px;
 }
 
 .logo {
-height: 75px;
-width: 250px;
-padding-top: 20px;
-padding-left: 50px;
+    height: 75px;
+    width: 250px;
+    padding-top: 20px;
+    padding-left: 50px;
 }
 
 nav ul {

@@ -1,4 +1,16 @@
+/* Frontpage image css start */
+.frontImage-container{
+    width: 100%;
+    height: 700px;
+}
 
+.frontPageImage{
+    width: 100vw;
+    height:720px;
+}
+/* Frontpage image css end */
+
+/* Contact form css start */
 .contact-section
 {
     display: flex;
@@ -18,43 +30,43 @@
     width: 570px;
     border-radius: 30px;
 }
-    #header-direct
-    {
-        color: white;
-        margin-bottom: 10px;
-        text-align: center;
-    }
-    input
-    {
-        border: none;
-        padding: 5px;
-    }
-    textarea
-    {
-        padding: 5px;
-        height: 140px;
-    }
-    .sendbutton
-    {
-        border: none;
-        border-radius: 5px;
-        padding: 5px;
-        padding-left: 45px;
-        padding-right: 45px;
-        background-color: #9c523b;
-        color: white;
-    }
-    #message
-    {
-        border: none;
-        margin-top: 5px;
-        width: 510px;
-    }
-    .about
-    {
-        width: 340px;
-        margin-bottom: 10px;
-    }
+#header-direct
+{
+    color: white;
+    margin-bottom: 10px;
+    text-align: center;
+}
+input
+{
+    border: none;
+    padding: 5px;
+}
+textarea
+{
+    padding: 5px;
+    height: 140px;
+}
+.sendbutton
+{
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    padding-left: 45px;
+    padding-right: 45px;
+    background-color: #9c523b;
+    color: white;
+}
+#message
+{
+    border: none;
+    margin-top: 5px;
+    width: 510px;
+}
+.about
+{
+    width: 340px;
+    margin-bottom: 10px;
+}
 
 
 .phone-contact
@@ -66,24 +78,25 @@
     width: 200px;
     border-radius: 30px;
 }
-    .phone-contact h3
-    {
-        color: white;
-        text-align: center;
-    }
-    .phone-contact p
-    {
-        font-weight: bold;
-        color: white;
-        text-align: center;
-    }
-    #phone_number
-    {
-        background-color: white;
-        color: black;
-        padding: 5px;
-        border-radius: 5px;
-    }
+.phone-contact h3
+{
+    color: white;
+    text-align: center;
+}
+.phone-contact p
+{
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+#phone_number
+{
+    background-color: white;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+}
+/* Contact form css end */
 
 
 
