@@ -24,10 +24,11 @@ if (contactForm) {
         })
             .then(response => {
                 if (response.ok) {
+                    alert("Email sendt. Vi svarer tilbage ved første ledige lejlighed")
                     console.log('Email sent successfully!');
                 } else {
                     console.log(response);
-                    alert("Failed to send email, server is too busy, try again in 3 seconds")
+                    alert("Fejl ved afsendelse af email!\n\n Årsag: serveren har for tralvt, prøv igen om 5 sekunder")
                     console.log('Failed to send email');
                 }
             })

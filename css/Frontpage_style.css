@@ -56,6 +56,14 @@ textarea
     background-color: #9c523b;
     color: white;
 }
+.sendbutton:hover
+{
+    transition: 0.3s;
+    background-color: #212b43;
+}
+.sendbutton:active {
+    background-color: #212b99;
+}
 #message
 {
     border: none;
