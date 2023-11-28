@@ -104,7 +104,9 @@ document.getElementById('backFromCompanyOverview').addEventListener('click', fun
 // Visning af Opdater Company Formular
 document.getElementById('updateCompanyBtn').addEventListener('click', function() {
     console.log('Opdater Company-knap klikket');
+
     document.getElementById('updateCompanyForm').style.display = 'block';
+    getCompanyInformation();
     // Tilføj logik her for at hente eksisterende company data fra serveren og udfylde formularen
 });
 
@@ -117,11 +119,70 @@ document.getElementById('backFromUpdateCompany').addEventListener('click', funct
 // Håndtering af Opdater Company Formular Indsendelse
 document.getElementById('companyForm').addEventListener('submit', function(event) {
     event.preventDefault();
+    updateCompanyInformation();
     console.log('Opdater Company Formular indsendt');
-    // Tilføj logik her for at sende de opdaterede data til serveren
-    // Skjul formular efter indsendelse
     document.getElementById('updateCompanyForm').style.display = 'none';
 });
+
+let companyCVR = document.getElementById("companyCVR").value;
+let companyTitle = document.getElementById("companyTitle").value;
+let companyDescription = document.getElementById("companyDescription").value;
+let companyNumber = document.getElementById("companyNumber").value;
+
+const updateCompanyURL = 'http://localhost:8080/update-company';
+
+
+async function getCompanyInformation()
+{
+    try {
+        const response = await fetch("http://localhost:8080/company")
+
+        const data = await response.json();
+        if (response.ok) {
+
+            companyCVR.innerHTML = data.cvr;
+            companyTitle.innerHTML = data.company_Title;
+            companyDescription.innerHTML = data.company_Description;
+            companyNumber.innerHTML = data.telephone;
+
+        } else {
+            console.log("Could not fetch data");
+        }
+        console.log(data);
+    } catch (error) {
+        console.error("Error:", error);
+    }
+};
+
+async function updateCompanyInformation()
+{
+    fetch(updateCompanyURL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded', // Set the appropriate content type
+        },
+        body: new URLSearchParams({
+            company_title: companyTitle,
+            company_description: companyDescription,
+            cvr: companyCVR,
+            telephone: companyNumber,
+        }),
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            console.log(data); // Log the response from the server
+            // Handle the success response as needed
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+            // Handle errors here
+        });
+}
 
 // Yderligere event listeners kan tilføjes her for Ydelser og Company sektionerne
 // ...
