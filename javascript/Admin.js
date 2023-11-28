@@ -6,27 +6,28 @@ document.addEventListener('DOMContentLoaded', function() {
         uploadButton.addEventListener('click', uploadPost);
     }
 });
-const HTMLPostImage = 'http://localhost:8080/createPost'
+const postUrl = 'localhost:8080/createPost'
 
 function uploadPost() {
-    const inputDescription = document.getElementById('description').value
-    const inputTitel = document.getElementById('titleinput').value
-    const input = document.getElementById('imageInput');
+    const inputDescription = document.getElementById('description')
+    const inputTitel = document.getElementById('titleinput')
+    const input = document.getElementById('imageInput')
     const file = input.files;
 
     if (file.length > 0) {
-        const formData = new FormData();
+        const formdata = new FormData();
+
         //håndtere titel og description tekst:
-        formdata.append('title', inputTitel)
-        formdata.append('description', inputDescription)
+        formdata.append('title', inputTitel.value)
+        formdata.append('description', inputDescription.value)
         //håndtere billeder :
-        for (let i = 0; i < files.length; i++) {
-            formData.append('image', file[i])
+        for (let i = 0; i < input.files.length; i++) {
+            formdata.append('image', file[i])
         }
 
-        fetch('http://localhost:8080/postImage', {
+        fetch('localhost:8080/createPost', {
             method: 'POST',
-            body: formData
+            body: formdata
         })
             .then(response => response.text())
             .then(data => {
@@ -34,7 +35,7 @@ function uploadPost() {
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('response').innerText = 'Error uploading image';
+                document.getElementById('response').innerText = 'Error creating post';
             });
     } else {
         document.getElementById('response').innerText = 'Please select an image to upload';
