@@ -37,6 +37,20 @@
     </tbody>
 </table>
 
+
+<h2>Upload an Post</h2>
+
+<form id="uploadForm">
+    <label for="titleinput">Titel</label>
+    <input type="text" id="titleinput" name="titleinput"><br> <!-- titel -->
+    <label for="description">Beskrivelse</label>
+    <input type="text" id="description" name="description"><br> <!-- beskrivelse  -->
+    <input type="file" id="imageInput" accept="image/*" multiple required><br>
+    <button type="button" id="uploadButton">Upload</button>
+</form>
+
+<div id="response"></div>
+
 <!-- Du kan tilføje flere admin-specifikke funktioner her -->
 
 <script type="module" src="../javascript/Admin.js" defer></script>
