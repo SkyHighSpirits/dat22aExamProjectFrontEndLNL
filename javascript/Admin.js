@@ -124,27 +124,19 @@ document.getElementById('companyForm').addEventListener('submit', function(event
     document.getElementById('updateCompanyForm').style.display = 'none';
 });
 
-let companyCVR = document.getElementById("companyCVR").value;
-let companyTitle = document.getElementById("companyTitle").value;
-let companyDescription = document.getElementById("companyDescription").value;
-let companyNumber = document.getElementById("companyNumber").value;
-
 const updateCompanyURL = 'http://localhost:8080/update-company';
 
-
-async function getCompanyInformation()
-{
+async function getCompanyInformation() {
     try {
         const response = await fetch("http://localhost:8080/company")
 
         const data = await response.json();
         if (response.ok) {
-
-            companyCVR.innerHTML = data.cvr;
-            companyTitle.innerHTML = data.company_Title;
-            companyDescription.innerHTML = data.company_Description;
-            companyNumber.innerHTML = data.telephone;
-
+            // Assuming these are input elements
+            document.getElementById("companyCVR").value = data.cvr;
+            document.getElementById("companyTitle").value = data.company_Title;
+            document.getElementById("companyDescription").value = data.company_Description;
+            document.getElementById("companyNumber").value = data.telephone;
         } else {
             console.log("Could not fetch data");
         }
@@ -154,8 +146,15 @@ async function getCompanyInformation()
     }
 };
 
-async function updateCompanyInformation()
-{
+async function updateCompanyInformation() {
+    // Move these declarations inside the function
+    let companyCVR = document.getElementById("companyCVR").value;
+    let companyTitle = document.getElementById("companyTitle").value;
+    let companyDescription = document.getElementById("companyDescription").value;
+    let companyNumber = document.getElementById("companyNumber").value;
+
+    const updateCompanyURL = 'http://localhost:8080/update-company';
+
     fetch(updateCompanyURL, {
         method: 'POST',
         headers: {
