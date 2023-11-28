@@ -1,0 +1,89 @@
+/* Contact form css start */
+.contact-section
+{
+    display: flex;
+    justify-content: space-evenly;
+    border: none;
+    padding: 20px;
+    margin: 5px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+
+.direct-contact
+{
+    border: none;
+    background-color: grey;
+    padding: 20px;
+    height: 300px;
+    width: 570px;
+    border-radius: 30px;
+}
+    #header-direct
+    {
+        color: white;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    input
+    {
+        border: none;
+        padding: 5px;
+    }
+    textarea
+    {
+        padding: 5px;
+        height: 140px;
+    }
+    .sendbutton
+    {
+        border: none;
+        border-radius: 5px;
+        padding: 5px;
+        padding-left: 45px;
+        padding-right: 45px;
+        background-color: #9c523b;
+        color: white;
+    }
+    #message
+    {
+        border: none;
+        margin-top: 5px;
+        width: 510px;
+    }
+    .about
+    {
+        width: 340px;
+        margin-bottom: 10px;
+    }
+
+
+.phone-contact
+{
+    border: none;
+    background-color: grey;
+    padding: 20px;
+    height: 300px;
+    width: 200px;
+    border-radius: 30px;
+}
+    .phone-contact h3
+    {
+        color: white;
+        text-align: center;
+    }
+    .phone-contact p
+    {
+        font-weight: bold;
+        color: white;
+        text-align: center;
+    }
+    #phone_number
+    {
+        background-color: white;
+        color: black;
+        padding: 5px;
+        border-radius: 5px;
+    }
+    /* Contact form css end */

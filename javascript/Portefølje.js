@@ -1,8 +1,8 @@
-import { callNavbarTemplate, callFooterTemplate } from "./template.js";
+import { callNavbarTemplate, callFooterTemplate, changeToKontakt, changeToForside, changeToYdelser, changeToPortefolje, changeToOmMig } from "./template.js";
 
 document.addEventListener("DOMContentLoaded", function () {
-    callNavbarTemplate();
-    callFooterTemplate();
+    callNavbarTemplate()
+    callFooterTemplate()
 });
 
 // Alle event listeners for navigationsknapper er nu håndteret i template.js
