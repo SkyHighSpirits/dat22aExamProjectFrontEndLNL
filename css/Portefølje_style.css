@@ -51,13 +51,14 @@
 #porteføljeContainer {
     margin-left: 20px; /* Justerer venstre margin for at flugte med dropdown */
     margin-right: 20px; /* Justerer højre margin */
+    margin-top: 10px; /* Reduceret øverste margin */
 }
 
 /* Container for dropdown og knap */
 .dropdownAndButtonContainer {
     display: flex;
     align-items: center;
-    margin: 20px;
+    margin: 10px 20px; /* Reduceret margin til 10px øverst og nederst, 20px til venstre og højre */
 }
 
 #ydelserDropdown, #loadMoreButton {
