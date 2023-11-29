@@ -34,7 +34,8 @@ function opdaterDropdown(data) {
 }
 
 function hentPorteføljeEmner() {
-    fetch(`http://localhost:8083/getPosts?page=${currentPage}&size=5`)
+    // Ændring foretaget her: Antallet af emner pr. side sat til 3
+    fetch(`http://localhost:8083/getPosts?page=${currentPage}&size=3`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Netværksrespons var ikke ok');
@@ -81,5 +82,6 @@ function loadMore() {
 // Gør funktionerne tilgængelige globalt
 window.hentPorteføljeEmner = hentPorteføljeEmner;
 window.loadMore = loadMore;
+
 
 
