@@ -1,0 +1,33 @@
+/* Eksisterende stilarter */
+.porteføljeEmne {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.porteføljeBeskrivelse {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.porteføljeBilleder img {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+}
+
+/* Tilføjede stilarter for dropdown-listen */
+#ydelserDropdown {
+    margin: 20px; /* Juster efter behov */
+    padding: 10px;
+    background-color: #9c523b;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#ydelserDropdown:hover {
+    background-color: #45a049;
+}
+
