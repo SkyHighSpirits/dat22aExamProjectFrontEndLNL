@@ -10,11 +10,17 @@
     <link rel="stylesheet" href="../css/Portefølje_style.css">
 </head>
 <body>
-<!-- Dropdown liste for ydelser -->
-<select id="ydelserDropdown" onchange="hentPorteføljeEmner()">
-    <option value="">Vælg en ydelse...</option>
-    <!-- Yderligere option-værdier tilføjes her -->
-</select>
+<!-- Container for dropdown og knap -->
+<div class="dropdownAndButtonContainer">
+    <!-- Dropdown liste for ydelser -->
+    <select id="ydelserDropdown" onchange="hentPorteføljeEmner()">
+        <option value="">Vælg en ydelse...</option>
+        <!-- Yderligere option-værdier tilføjes her -->
+    </select>
+
+    <!-- Knap til at indlæse flere emner -->
+    <button id="loadMoreButton" onclick="loadMore()">Indlæs flere</button>
+</div>
 
 <!-- Container til portefølje-emner -->
 <div id="porteføljeContainer"></div>
@@ -22,3 +28,4 @@
 <script type="module" src="../javascript/Portefølje.js" defer></script>
 </body>
 </html>
+

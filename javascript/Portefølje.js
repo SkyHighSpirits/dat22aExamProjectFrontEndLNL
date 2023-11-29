@@ -1,15 +1,17 @@
 import { callNavbarTemplate, callFooterTemplate } from "./template.js";
 
+let currentPage = 0; // Holder styr på den aktuelle side
+
 document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM fuldt indlæst og parset");
     callNavbarTemplate();
     callFooterTemplate();
-    hentYdelser(); // Tilføj dette kald for at hente ydelser ved indlæsning
-    hentPorteføljeEmner(); // Tilføjer et kald til at hente portefølje-emner ved indlæsning
+    hentYdelser();
+    hentPorteføljeEmner(); // Henter de første portefølje-emner ved indlæsning
 });
 
 function hentYdelser() {
-    fetch('http://localhost:8083/api/operations') // Erstat med den korrekte URL til din backend
+    fetch('http://localhost:8083/api/operations')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Netværksrespons var ikke ok');
@@ -24,28 +26,30 @@ function opdaterDropdown(data) {
     const dropdown = document.getElementById('ydelserDropdown');
     data.forEach(operation => {
         const option = document.createElement('option');
-        option.value = operation.operationId; // Brug operationId som værdi
-        option.textContent = operation.operationName; // Brug operationName som tekst
+        option.value = operation.operationId;
+        option.textContent = operation.operationName;
         dropdown.appendChild(option);
     });
     console.log("Ydelser er tilføjet til dropdown-menuen");
 }
 
 function hentPorteføljeEmner() {
-    fetch('http://localhost:8083/getPosts') // Erstat med den korrekte URL til din backend
+    fetch(`http://localhost:8083/getPosts?page=${currentPage}&size=5`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Netværksrespons var ikke ok');
             }
             return response.json();
         })
-        .then(data => opdaterPortefølje(data))
+        .then(data => {
+            opdaterPortefølje(data);
+            currentPage++; // Forbereder den næste side
+        })
         .catch(error => console.error('Fejl ved hentning af poster:', error));
 }
 
 function opdaterPortefølje(data) {
     const porteføljeContainer = document.getElementById('porteføljeContainer');
-    porteføljeContainer.innerHTML = ''; // Ryd tidligere indhold
 
     data.forEach(item => {
         const emneDiv = document.createElement('div');
@@ -53,23 +57,29 @@ function opdaterPortefølje(data) {
 
         const beskrivelseDiv = document.createElement('div');
         beskrivelseDiv.classList.add('porteføljeBeskrivelse');
-        beskrivelseDiv.textContent = item.poster.poster_Description; // Antager at din Poster-klasse har en beskrivelse
+        beskrivelseDiv.textContent = item.poster.poster_Description;
         emneDiv.appendChild(beskrivelseDiv);
 
         const billederDiv = document.createElement('div');
         billederDiv.classList.add('porteføljeBilleder');
         item.images.forEach(billede => {
             const img = document.createElement('img');
-            img.src = 'data:image/jpeg;base64,' + billede.byte_img; // Antager at billedet er i base64-format
+            img.src = 'data:image/jpeg;base64,' + billede.byte_img;
             billederDiv.appendChild(img);
         });
         emneDiv.appendChild(billederDiv);
 
         porteføljeContainer.appendChild(emneDiv);
     });
-
-    console.log("Portefølje-emner er blevet opdateret");
 }
 
-window.hentPorteføljeEmner = hentPorteføljeEmner; // Gør funktionen tilgængelig globalt
+// Funktion til at indlæse flere emner
+function loadMore() {
+    hentPorteføljeEmner();
+}
+
+// Gør funktionerne tilgængelige globalt
+window.hentPorteføljeEmner = hentPorteføljeEmner;
+window.loadMore = loadMore;
+
 

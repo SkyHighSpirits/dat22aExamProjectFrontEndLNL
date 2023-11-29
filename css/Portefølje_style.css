@@ -53,5 +53,30 @@
     margin-right: 20px; /* Justerer højre margin */
 }
 
+/* Container for dropdown og knap */
+.dropdownAndButtonContainer {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+}
+
+#ydelserDropdown, #loadMoreButton {
+    margin-right: 10px; /* Tilføjer lidt plads mellem elementerne */
+}
+
+/* Stil for 'Indlæs flere'-knappen */
+#loadMoreButton {
+    padding: 10px;
+    background-color: #9c523b;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#loadMoreButton:hover {
+    background-color: #45a049;
+}
+
 
 
