@@ -28,7 +28,8 @@ if (contactForm) {
                     console.log('Email sent successfully!');
                 } else {
                     console.log(response);
-                    console.log('Failed to send email.');
+                    alert("Failed to send email, server is too busy, try again in 3 seconds")
+                    console.log('Failed to send email');
                 }
             })
             .catch(error => {
@@ -36,3 +37,4 @@ if (contactForm) {
             });
     });
 }
+

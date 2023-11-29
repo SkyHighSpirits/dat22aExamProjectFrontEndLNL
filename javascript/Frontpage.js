@@ -1,8 +1,9 @@
 import { callNavbarTemplate, callFooterTemplate } from "./template.js";
 
+
 document.addEventListener("DOMContentLoaded", function () {
-    callNavbarTemplate();
-    callFooterTemplate();
+    callNavbarTemplate()
+    callFooterTemplate()
 });
 
 let contactForm = document.getElementById("contact-form");
@@ -10,6 +11,7 @@ let contactForm = document.getElementById("contact-form");
 if (contactForm) {
     contactForm.addEventListener("submit", function (event) {
         event.preventDefault();
+
         const formData = new FormData(contactForm);
         const requestData = new URLSearchParams(formData);
 
@@ -17,16 +19,16 @@ if (contactForm) {
             method: 'POST',
             body: requestData,
             headers: {
-                //'Authentication'
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         })
             .then(response => {
                 if (response.ok) {
+                    alert("Email sendt. Vi svarer tilbage ved første ledige lejlighed")
                     console.log('Email sent successfully!');
                 } else {
                     console.log(response);
-                    alert("Failed to send email, server is too busy, try again in 3 seconds");
+                    alert("Fejl ved afsendelse af email!\n\n Årsag: serveren har for tralvt, prøv igen om 5 sekunder")
                     console.log('Failed to send email');
                 }
             })
@@ -35,3 +37,4 @@ if (contactForm) {
             });
     });
 }
+
