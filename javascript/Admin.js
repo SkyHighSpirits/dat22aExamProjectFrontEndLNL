@@ -171,6 +171,10 @@ async function updateCompanyInformation() {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
+            if(response.ok)
+            {
+                alert("Dine firma oplysninger blev opdateret succesfuldt");
+            }
             return response.text();
         })
         .then(data => {
