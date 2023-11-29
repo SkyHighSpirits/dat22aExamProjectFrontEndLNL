@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administration</title>
     <link rel="stylesheet" href="../css/Admin_style.css">
+    <link rel="stylesheet" href="../css/PopUpWindowStyle.css">
 </head>
 <body>
 <h1>Administration</h1>
@@ -124,6 +125,20 @@
             <button type="button" id="backFromUpdateCompany">Tilbage</button>
         </form>
     </div>
+</div>
+
+<div class="modal" id="modal">
+    <div class="modal-inner">
+        <h2>Login</h2><br>
+        <form>
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username"><br>
+            <label for="password">Password:</label><br>
+            <input type="text" id="password" name="password"><br><br>
+            <input type="submit" id="closeModal" value="Login">
+        </form>
+    </div>
+
 </div>
 
 <script src="../javascript/Admin.js"></script>

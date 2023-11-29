@@ -119,9 +119,28 @@ document.getElementById('backFromUpdateCompany').addEventListener('click', funct
 // Håndtering af Opdater Company Formular Indsendelse
 document.getElementById('companyForm').addEventListener('submit', function(event) {
     event.preventDefault();
+    setButtonID(companyForm);
     updateCompanyInformation();
     console.log('Opdater Company Formular indsendt');
     document.getElementById('updateCompanyForm').style.display = 'none';
+});
+
+let openBtn;
+
+async function setButtonID(elementId)
+{
+    openBtn = document.getElementById(elementId)
+}
+
+const closeBtn = document.getElementById("closeModal")
+const modal = document.getElementById("modal")
+
+openBtn.addEventListener("click", () => {
+    modal.classList.add("open");
+});
+
+closeBtn.addEventListener("click", () => {
+    modal.classList.remove("open");
 });
 
 const updateCompanyURL = 'http://localhost:8080/update-company';
@@ -146,7 +165,8 @@ async function getCompanyInformation() {
     }
 };
 
-async function updateCompanyInformation() {
+
+async function updateCompanyInformation(username, password) {
     // Move these declarations inside the function
     let companyCVR = document.getElementById("companyCVR").value;
     let companyTitle = document.getElementById("companyTitle").value;
