@@ -22,10 +22,10 @@ function uploadPost() {
         formdata.append('description', inputDescription.value)
         //håndtere billeder :
         for (let i = 0; i < input.files.length; i++) {
-            formdata.append('image', file[i])
+            formdata.append('images', file[i])
         }
 
-        fetch('localhost:8080/createPost', {
+        fetch('http://localhost:8080/createPost', {
             method: 'POST',
             body: formdata
         })
