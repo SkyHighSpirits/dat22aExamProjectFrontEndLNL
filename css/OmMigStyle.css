@@ -28,3 +28,26 @@ body {
     color: black;
     padding-right: 20px;
 }
+
+.info-container button {
+    padding: 10px 20px;
+    margin-top: 30px;
+    font-size: 16px;
+    background-color: white;
+    color: black;
+    border: solid 1px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.info-container button:hover {
+    transition: .5s;
+    background-color: #212b43;
+    color: white;
+    border: none;
+    
+}
+
+.info-container button:active {
+    background-color: #0e121d;
+}
