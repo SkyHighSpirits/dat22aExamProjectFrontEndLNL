@@ -1,19 +1,35 @@
 /* Eksisterende stilarter */
 .porteføljeEmne {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #f3f3f3; /* Baggrundsfarve som eksempel */
+    border: 1px solid #ddd; /* Tilføjer en grænse */
+    padding: 20px;
     margin-bottom: 20px;
+    margin-left: 20px; /* Tilføjer venstre margin */
+    margin-right: 20px; /* Tilføjer højre margin */
+    border-radius: 5px; /* Afrundede hjørner */
 }
 
 .porteføljeBeskrivelse {
-    flex: 1;
-    margin-right: 10px;
+    margin-bottom: 10px;
+    font-weight: bold; /* Gør teksten fed */
+}
+
+.porteføljeBilleder {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .porteføljeBilleder img {
     width: 100px;
     height: 100px;
     margin-right: 10px;
+    margin-bottom: 10px; /* Tilføjer margin i bunden */
+    border-radius: 5px; /* Afrundede hjørner på billeder */
 }
 
 /* Tilføjede stilarter for dropdown-listen */
@@ -30,4 +46,12 @@
 #ydelserDropdown:hover {
     background-color: #45a049;
 }
+
+/* Container til portefølje-emner */
+#porteføljeContainer {
+    margin-left: 20px; /* Justerer venstre margin for at flugte med dropdown */
+    margin-right: 20px; /* Justerer højre margin */
+}
+
+
 
