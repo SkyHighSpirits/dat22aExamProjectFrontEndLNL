@@ -12,6 +12,7 @@ document.getElementById('backFromPortfolioOverview').addEventListener('click', f
 // Visning af Tilføj Portefølje Formular
 document.getElementById('addPortfolioBtn').addEventListener('click', function() {
     console.log('Tilføj Portefølje-knap klikket');
+
     document.getElementById('addPortfolioForm').style.display = 'block';
 });
 
@@ -26,6 +27,8 @@ document.getElementById('newPortfolioForm').addEventListener('submit', function(
     event.preventDefault();
     console.log('Tilføj Portefølje Formular indsendt');
     // Tilføj logik her for at sende formular data til serveren
+    setButtonID('newPortfolioForm');
+    openModal();
     // Skjul formular efter indsendelse
     document.getElementById('addPortfolioForm').style.display = 'none';
 });
@@ -33,6 +36,8 @@ document.getElementById('newPortfolioForm').addEventListener('submit', function(
 // Visning og skjulning af Slet Portefølje Sektion
 document.getElementById('deletePortfolioBtn').addEventListener('click', function() {
     console.log('Slet Portefølje-knap klikket');
+    setButtonID('deletePortfolioBtn')
+    openModal();
     document.getElementById('deletePortfolioSection').style.display = 'block';
     // Tilføj logik her for at hente og vise portefølje-emner
 });
@@ -71,6 +76,8 @@ document.getElementById('backFromAddService').addEventListener('click', function
 document.getElementById('newServiceForm').addEventListener('submit', function(event) {
     event.preventDefault();
     console.log('Tilføj Ydelse Formular indsendt');
+    setButtonID('newServiceForm');
+    openModal();
     // Tilføj logik her for at sende formular data til serveren
     // Skjul formular efter indsendelse
     document.getElementById('addServiceForm').style.display = 'none';
@@ -80,6 +87,8 @@ document.getElementById('newServiceForm').addEventListener('submit', function(ev
 document.getElementById('deleteServiceBtn').addEventListener('click', function() {
     console.log('Slet Ydelse-knap klikket');
     document.getElementById('deleteServiceSection').style.display = 'block';
+    setButtonID('deleteServiceBtn')
+    openModal();
     // Tilføj logik her for at hente og vise ydelser
 });
 
@@ -104,8 +113,8 @@ document.getElementById('backFromCompanyOverview').addEventListener('click', fun
 // Visning af Opdater Company Formular
 document.getElementById('updateCompanyBtn').addEventListener('click', function() {
     console.log('Opdater Company-knap klikket');
-
     document.getElementById('updateCompanyForm').style.display = 'block';
+
     getCompanyInformation();
     // Tilføj logik her for at hente eksisterende company data fra serveren og udfylde formularen
 });
@@ -119,8 +128,8 @@ document.getElementById('backFromUpdateCompany').addEventListener('click', funct
 // Håndtering af Opdater Company Formular Indsendelse
 document.getElementById('companyForm').addEventListener('submit', function(event) {
     event.preventDefault();
-    setButtonID(companyForm);
-    updateCompanyInformation();
+    setButtonID("companyForm");
+    openModal();
     console.log('Opdater Company Formular indsendt');
     document.getElementById('updateCompanyForm').style.display = 'none';
 });
@@ -135,15 +144,68 @@ async function setButtonID(elementId)
 const closeBtn = document.getElementById("closeModal")
 const modal = document.getElementById("modal")
 
-openBtn.addEventListener("click", () => {
-    modal.classList.add("open");
-});
+
+
+async function openModal()
+{
+    modal.classList.add("open")
+}
 
 closeBtn.addEventListener("click", () => {
     modal.classList.remove("open");
 });
 
-const updateCompanyURL = 'http://localhost:8080/update-company';
+document.querySelector('#modal form').addEventListener('submit', function (event) {
+    event.preventDefault();
+    let username = document.getElementById('username').value;
+    let password = document.getElementById('password').value;
+
+    // Add logic here to handle the login (e.g., send credentials to the server)
+    if(openBtn.id === 'companyForm')
+    {
+        updateCompanyInformation(username,password)
+
+    }
+    if(openBtn.id === 'newServiceForm')
+    {
+        addOperation(username, password)
+    }
+    if(openBtn.id === 'deleteServiceBtn')
+    {
+        deleteOperation(username, password)
+    }
+    if(openBtn.id === 'deletePortfolioBtn')
+    {
+        deletePoster(username, password)
+    }
+    if(openBtn.id === 'newPortfolioForm')
+    {
+        addPortfolio(username, password)
+    }
+    // For now, just close the modal
+    modal.classList.remove('open');
+});
+
+async function addOperation(username, password)
+{
+    //IMPLEMENT YOUR FETCH HERE
+}
+
+async function deleteOperation(username, password)
+{
+    //IMPLEMENT YOUR FETCH HERE
+}
+
+async function deletePoster(username, password)
+{
+    //IMPLEMENT YOUR FETCH HERE
+}
+
+async function addPortfolio(username, password)
+{
+    //IMPLEMENT YOUR FETCH HERE
+}
+
 
 async function getCompanyInformation() {
     try {
@@ -185,17 +247,23 @@ async function updateCompanyInformation(username, password) {
             company_description: companyDescription,
             cvr: companyCVR,
             telephone: companyNumber,
+            username: username,
+            password: password
         }),
     })
         .then(response => {
-            if (!response.ok) {
+            console.log(response)
+            console.log(response.status)
+
+            if (response.ok) {
+                alert("Dine firma oplysninger blev opdateret succesfuldt");
+                return response.text();
+            } else if (response.status === 401) {
+                alert("Forkert password eller username");
+                throw new Error('Authentication error');
+            } else {
                 throw new Error('Network response was not ok');
             }
-            if(response.ok)
-            {
-                alert("Dine firma oplysninger blev opdateret succesfuldt");
-            }
-            return response.text();
         })
         .then(data => {
             console.log(data); // Log the response from the server
@@ -203,6 +271,8 @@ async function updateCompanyInformation(username, password) {
         })
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
+            // Log the error message received from the server
+            console.error('Server error:', error.message);
             // Handle errors here
         });
 }
