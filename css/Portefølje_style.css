@@ -2,7 +2,6 @@
 .porteføljeEmne {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     background-color: #f3f3f3; /* Baggrundsfarve som eksempel */
     border: 1px solid #ddd; /* Tilføjer en grænse */
     padding: 20px;
@@ -12,16 +11,28 @@
     border-radius: 5px; /* Afrundede hjørner */
 }
 
-.porteføljeBeskrivelse {
+.infoCon{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.porteføljeTitel{
     margin-bottom: 10px;
     font-weight: bold; /* Gør teksten fed */
 }
 
+.porteføljeBeskrivelse {
+    margin-bottom: 10px;
+    order: 1;
+}
+
+
 .porteføljeBilleder {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
+    margin-bottom: 10px;
+
 }
 
 .porteføljeBilleder img {
@@ -57,8 +68,10 @@
 /* Container for dropdown og knap */
 .dropdownAndButtonContainer {
     display: flex;
+    flex-direction: column;
     align-items: center;
     margin: 10px 20px; /* Reduceret margin til 10px øverst og nederst, 20px til venstre og højre */
+    display: block;
 }
 
 #ydelserDropdown, #loadMoreButton {
@@ -67,17 +80,22 @@
 
 /* Stil for 'Indlæs flere'-knappen */
 #loadMoreButton {
+    margin: 20px auto;
     padding: 10px;
     background-color: #9c523b;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    display: block;
 }
 
 #loadMoreButton:hover {
     background-color: #45a049;
 }
 
+.image-popup{
+    z-index: 9999;
+}
 
 
