@@ -163,8 +163,7 @@ document.querySelector('#modal form').addEventListener('submit', function (event
     // Add logic here to handle the login (e.g., send credentials to the server)
     if(openBtn.id === 'companyForm')
     {
-        updateCompanyInformation(username,password)
-
+        updateCompanyInformation(username, password)
     }
     if(openBtn.id === 'newServiceForm')
     {
@@ -262,6 +261,7 @@ async function updateCompanyInformation(username, password) {
                 alert("Forkert password eller username");
                 throw new Error('Authentication error');
             } else {
+                alert("An error occured");
                 throw new Error('Network response was not ok');
             }
         })
