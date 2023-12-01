@@ -1,4 +1,4 @@
-import { callNavbarTemplate, callFooterTemplate } from "./template.js";
+import { callNavbarTemplate, callFooterTemplate, changeToKontakt, changeToForside, changeToYdelser, changeToPortefolje, changeToOmMig } from "./template.js";
 
 let currentPage = 0; // Holder styr på den aktuelle side
 

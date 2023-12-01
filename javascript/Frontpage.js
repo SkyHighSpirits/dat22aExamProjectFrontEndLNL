@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
     callFooterTemplate()
 });
 
-// Hvis der er en kontaktformular på forsiden, skal du tilføje event listener til den.
 let contactForm = document.getElementById("contact-form");
+
 if (contactForm) {
     contactForm.addEventListener("submit", function (event) {
         event.preventDefault();
