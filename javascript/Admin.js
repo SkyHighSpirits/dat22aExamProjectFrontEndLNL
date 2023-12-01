@@ -1,5 +1,75 @@
 
 // Add event listener for the "Upload" button
+function createPortfolioForm()
+{
+    var parentElement = document.getElementById('addPortfolioForm');
+
+// Create the form element
+    var formElement = document.createElement('form');
+    formElement.id = 'newPortfolioForm';
+
+// Create the label for the title input
+    var titleLabel = document.createElement('label');
+    titleLabel.setAttribute('for', 'titleinput');
+    titleLabel.textContent = 'Titel';
+    formElement.appendChild(titleLabel);
+
+// Create the title input element
+    var titleInput = document.createElement('input');
+    titleInput.type = 'text';
+    titleInput.id = 'titleinput';
+    titleInput.name = 'titleinput';
+    formElement.appendChild(titleInput);
+    formElement.appendChild(document.createElement('br'));
+
+// Create the label for the description input
+    var descriptionLabel = document.createElement('label');
+    descriptionLabel.setAttribute('for', 'description');
+    descriptionLabel.textContent = 'Beskrivelse';
+    formElement.appendChild(descriptionLabel);
+
+// Create the description input element
+    var descriptionInput = document.createElement('input');
+    descriptionInput.type = 'text';
+    descriptionInput.id = 'description';
+    descriptionInput.name = 'description';
+    formElement.appendChild(descriptionInput);
+    formElement.appendChild(document.createElement('br'));
+
+// Create the file input element
+    var fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.id = 'imageInput';
+    fileInput.accept = 'image/*';
+    fileInput.multiple = true;
+    fileInput.required = true;
+    formElement.appendChild(fileInput);
+    formElement.appendChild(document.createElement('br'));
+
+// Create the Upload button
+    var uploadButton = document.createElement('button');
+    uploadButton.type = 'button';
+    uploadButton.id = 'uploadButton';
+    uploadButton.textContent = 'Upload';
+    formElement.appendChild(uploadButton);
+
+    uploadButton.addEventListener("submit", function()
+        {
+
+        }
+    )
+
+// Create the Back button
+    var backButton = document.createElement('button');
+    backButton.type = 'button';
+    backButton.id = 'backFromAddPortfolio';
+    backButton.textContent = 'Tilbage';
+    formElement.appendChild(backButton);
+
+// Append the form to the parent element
+    parentElement.appendChild(formElement);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const uploadButton = document.getElementById('uploadButton')
     if (uploadButton) {
@@ -43,6 +113,9 @@ function uploadPost() {
 }
 
 // Visning og skjulning af Portefølje Oversigt
+let username
+let password
+
 document.getElementById('showPortfolioOverviewBtn').addEventListener('click', function() {
     console.log('Portefølje Oversigt-knap klikket');
     document.getElementById('portfolioOverview').style.display = 'block';
@@ -56,7 +129,8 @@ document.getElementById('backFromPortfolioOverview').addEventListener('click', f
 // Visning af Tilføj Portefølje Formular
 document.getElementById('addPortfolioBtn').addEventListener('click', function() {
     console.log('Tilføj Portefølje-knap klikket');
-
+    emptyPortfolioContainer();
+    createPortfolioForm();
     document.getElementById('addPortfolioForm').style.display = 'block';
 });
 
@@ -89,6 +163,7 @@ document.getElementById('deletePortfolioBtn').addEventListener('click', function
 document.getElementById('backFromDeletePortfolio').addEventListener('click', function() {
     console.log('Tilbage fra Slet Portefølje-knap klikket');
     document.getElementById('deletePortfolioSection').style.display = 'none';
+    window.location.reload();
 });
 
 // ------  YDELSER --------
@@ -158,7 +233,6 @@ document.getElementById('backFromCompanyOverview').addEventListener('click', fun
 document.getElementById('updateCompanyBtn').addEventListener('click', function() {
     console.log('Opdater Company-knap klikket');
     document.getElementById('updateCompanyForm').style.display = 'block';
-
     getCompanyInformation();
     // Tilføj logik her for at hente eksisterende company data fra serveren og udfylde formularen
 });
@@ -188,8 +262,6 @@ async function setButtonID(elementId)
 const closeBtn = document.getElementById("closeModal")
 const modal = document.getElementById("modal")
 
-
-
 async function openModal()
 {
     modal.classList.add("open")
@@ -201,8 +273,8 @@ closeBtn.addEventListener("click", () => {
 
 document.querySelector('#modal form').addEventListener('submit', function (event) {
     event.preventDefault();
-    let username = document.getElementById('username').value;
-    let password = document.getElementById('password').value;
+    username = document.getElementById('username').value;
+    password = document.getElementById('password').value;
 
     // Add logic here to handle the login (e.g., send credentials to the server)
     if(openBtn.id === 'companyForm')
@@ -219,7 +291,8 @@ document.querySelector('#modal form').addEventListener('submit', function (event
     }
     if(openBtn.id === 'deletePortfolioBtn')
     {
-        deletePoster(username, password)
+        emptyPortfolioContainer()
+        hentPorteføljeEmner(username, password)
     }
     if(openBtn.id === 'newPortfolioForm')
     {
@@ -228,6 +301,8 @@ document.querySelector('#modal form').addEventListener('submit', function (event
     // For now, just close the modal
     modal.classList.remove('open');
 });
+
+
 
 async function addOperation(username, password)
 {
@@ -239,16 +314,48 @@ async function deleteOperation(username, password)
     //IMPLEMENT YOUR FETCH HERE
 }
 
-async function deletePoster(username, password)
-{
-    //IMPLEMENT YOUR FETCH HERE
+async function deletePoster(id, username, password) {
+    // API endpoint for deletePoster
+    const url = `http://localhost:8080/deletePoster?poster_id=${id}&username=${username}&password=${password}`;
+
+    // Fetch options for DELETE request
+    const fetchOptions = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    // Make the fetch request
+    await fetch(url, fetchOptions)
+        .then(response => {
+            if (response.ok) {
+                // Poster deleted successfully
+                console.log("Poster deleted successfully");
+            } else if (response.status === 404) {
+                // Poster not found
+                alert("Fejl. Prøv at genloade siden og prøv igen")
+                console.log("Poster not found");
+            } else if (response.status === 401) {
+                // Unauthorized access (password incorrect)
+                alert("Fejl. Prøv at genloade siden og prøv igen")
+                console.log("Unauthorized access");
+            } else {
+                // Other errors
+                console.log(response)
+                console.error("Error deleting poster");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
 }
+
 
 async function addPortfolio(username, password)
 {
     //IMPLEMENT YOUR FETCH HERE
 }
-
 
 async function getCompanyInformation() {
     try {
@@ -269,7 +376,6 @@ async function getCompanyInformation() {
         console.error("Error:", error);
     }
 };
-
 
 async function updateCompanyInformation(username, password) {
     // Move these declarations inside the function
@@ -320,6 +426,89 @@ async function updateCompanyInformation(username, password) {
             // Handle errors here
         });
 }
+
+async function hentPorteføljeEmner(username, password) {
+
+    await fetch(`http://localhost:8080/getPostsPwd?username=${username}&password=${password}`)
+        .then(response => {
+            if(response.status === 401)
+            {
+                alert("Forkert password eller username")
+            }
+            else if (!response.ok) {
+                throw new Error('Netværksrespons var ikke ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            opdaterPortefølje(data);
+        // Forbereder den næste side
+        })
+        .catch(error => console.error('Fejl ved hentning af poster:', error));
+}
+
+
+async function opdaterPortefølje(data) {
+    const porteføljeContainer = document.getElementById('porteføljeContainer');
+
+    await data.forEach(item => {
+        const emneDiv = document.createElement('div');
+        emneDiv.classList.add('porteføljeEmne');
+
+        const infoCon = document.createElement("div")
+        infoCon.classList.add('infoCon')
+        emneDiv.appendChild(infoCon)
+
+        const deleteButton = document.createElement('button')
+        infoCon.appendChild(deleteButton);
+        deleteButton.className = "deletePortfolioButton";
+        let id = item.poster.id
+        console.log(id)
+        deleteButton.innerText = "Delete";
+
+        deleteButton.addEventListener('click', function() {
+                deletePoster(id, username, password)
+                emptyPortfolioContainer()
+
+                hentPorteføljeEmner(username, password)
+        });
+
+        const titelDiv = document.createElement("div")
+        titelDiv.classList.add('porteføljeTitel')
+        titelDiv.textContent = item.poster.poster_Title
+        emneDiv.appendChild(titelDiv)
+
+        const beskrivelseDiv = document.createElement('div');
+        beskrivelseDiv.classList.add('porteføljeBeskrivelse');
+        beskrivelseDiv.textContent = item.poster.poster_Description;
+        infoCon.appendChild(beskrivelseDiv);
+
+        const billederDiv = document.createElement('div');
+        billederDiv.classList.add('porteføljeBilleder');
+        item.images.forEach(billede => {
+            const img = document.createElement('img');
+            img.src = 'data:image/jpeg;base64,' + billede.byte_img;
+            img.classList.add('clickable-image')
+            billederDiv.appendChild(img);
+        });
+        infoCon.appendChild(billederDiv);
+
+        porteføljeContainer.appendChild(emneDiv);
+        emneDiv.appendChild(infoCon)
+    });
+}
+
+function emptyPortfolioContainer() {
+    const container = document.getElementById("porteføljeContainer");
+    const addPortfolioForm = document.getElementById("addPortfolioForm");
+
+    container.innerHTML = '';
+    addPortfolioForm.innerHTML = '';
+}
+
+
+
+
 
 // Yderligere event listeners kan tilføjes her for Ydelser og Company sektionerne
 // ...

@@ -6,33 +6,36 @@
     <title>Administration</title>
     <link rel="stylesheet" href="../css/Admin_style.css">
     <link rel="stylesheet" href="../css/PopUpWindowStyle.css">
+    <link rel="stylesheet" href="../css/Portefølje_style.css">
 </head>
 <body>
 <h1>Administration</h1>
 
 <!-- Portefølje Sektion -->
 <div class="section">
-    <h2>Portefølje</h2>
-    <button id="showPortfolioOverviewBtn">Oversigt</button>
-    <button id="addPortfolioBtn">Tilføj</button>
-    <button id="deletePortfolioBtn">Slet</button>
 
 
 
-<h2>Upload an Post</h2>
+
 
 <form id="uploadForm">
-    <label for="titleinput">Titel</label>
-    <input type="text" id="titleinput" name="titleinput"><br> <!-- titel -->
-    <label for="description">Beskrivelse</label>
-    <input type="text" id="description" name="description"><br> <!-- beskrivelse  -->
-    <input type="file" id="imageInput" accept="image/*" multiple required><br>
-    <button type="button" id="uploadButton">Upload</button>
+
+
+
 </form>
 
 <div id="response"></div>
 
 <!-- Du kan tilføje flere admin-specifikke funktioner her -->
+
+    <div id="portfolioButtonContainer">
+        <h2>Portefølje</h2>
+        <button id="showPortfolioOverviewBtn">Oversigt</button>
+        <button id="addPortfolioBtn">Tilføj</button>
+        <button id="deletePortfolioBtn">Slet</button>
+        <div id="porteføljeContainer"></div>
+    </div>
+
 
     <!-- Portefølje Oversigt Sektion -->
     <div id="portfolioOverview" style="display:none;">
@@ -44,22 +47,18 @@
     <!-- Tilføj Portefølje Formular -->
     <div id="addPortfolioForm" style="display:none;">
         <form id="newPortfolioForm">
-            <label for="portfolioDescription">Beskrivelse:</label>
-            <input type="text" id="portfolioDescription" name="description" required><br><br>
+            <label for="titleinput">Titel</label>
+            <input type="text" id="titleinput" name="titleinput"><br> <!-- titel -->
 
-            <label for="portfolioImage1">Billede 1:</label>
-            <input type="file" id="portfolioImage1" name="image1"><br><br>
+            <label for="description">Beskrivelse</label>
+            <input type="text" id="description" name="description"><br> <!-- beskrivelse  -->
+            <input type="file" id="imageInput" accept="image/*" multiple required><br>
 
-            <label for="portfolioImage2">Billede 2:</label>
-            <input type="file" id="portfolioImage2" name="image2"><br><br>
-
-            <label for="portfolioImage3">Billede 3:</label>
-            <input type="file" id="portfolioImage3" name="image3"><br><br>
-
-            <button type="submit">Tilføj</button>
+            <button type="button" id="uploadButton">Upload</button>
             <button type="button" id="backFromAddPortfolio">Tilbage</button>
         </form>
     </div>
+
 
     <!-- Slet Portefølje Sektion -->
     <div id="deletePortfolioSection" style="display:none;">
