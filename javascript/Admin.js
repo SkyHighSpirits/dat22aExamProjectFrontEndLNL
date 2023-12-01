@@ -1,3 +1,47 @@
+
+// Add event listener for the "Upload" button
+document.addEventListener('DOMContentLoaded', function() {
+    const uploadButton = document.getElementById('uploadButton')
+    if (uploadButton) {
+        uploadButton.addEventListener('click', uploadPost);
+    }
+});
+const postUrl = 'localhost:8080/createPost'
+
+function uploadPost() {
+    const inputDescription = document.getElementById('description')
+    const inputTitel = document.getElementById('titleinput')
+    const input = document.getElementById('imageInput')
+    const file = input.files;
+
+    if (file.length > 0) {
+        const formdata = new FormData();
+
+        //håndtere titel og description tekst:
+        formdata.append('title', inputTitel.value)
+        formdata.append('description', inputDescription.value)
+        //håndtere billeder :
+        for (let i = 0; i < input.files.length; i++) {
+            formdata.append('images', file[i])
+        }
+
+        fetch('http://localhost:8080/createPost', {
+            method: 'POST',
+            body: formdata
+        })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('response').innerText = data;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('response').innerText = 'Error creating post';
+            });
+    } else {
+        document.getElementById('response').innerText = 'Please select an image to upload';
+    }
+}
+
 // Visning og skjulning af Portefølje Oversigt
 document.getElementById('showPortfolioOverviewBtn').addEventListener('click', function() {
     console.log('Portefølje Oversigt-knap klikket');
