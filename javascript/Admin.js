@@ -53,11 +53,11 @@ function createPortfolioForm()
     uploadButton.textContent = 'Upload';
     formElement.appendChild(uploadButton);
 
-    uploadButton.addEventListener("submit", function()
-        {
-
-        }
-    )
+    uploadButton.addEventListener('click', function()
+    {
+        openModal()
+        setButtonID("uploadButton")
+    });
 
 // Create the Back button
     var backButton = document.createElement('button');
@@ -76,9 +76,8 @@ document.addEventListener('DOMContentLoaded', function() {
         uploadButton.addEventListener('click', uploadPost);
     }
 });
-const postUrl = 'localhost:8083/createPost'
 
-function uploadPost() {
+function uploadPost(username, password) {
     const inputDescription = document.getElementById('description')
     const inputTitel = document.getElementById('titleinput')
     const input = document.getElementById('imageInput')
@@ -89,13 +88,17 @@ function uploadPost() {
 
         //håndtere titel og description tekst:
         formdata.append('title', inputTitel.value)
-        formdata.append('description', inputDescription.value)
+        formdata.append('description', inputDescription.value);
+
+        formdata.append('username', username);
+        formdata.append('password', password);
+
         //håndtere billeder :
         for (let i = 0; i < input.files.length; i++) {
             formdata.append('images', file[i])
         }
 
-        fetch('http://localhost:8083/createPost', {
+        fetch('http://localhost:8080/createPost', {
             method: 'POST',
             body: formdata
         })
@@ -294,9 +297,9 @@ document.querySelector('#modal form').addEventListener('submit', function (event
         emptyPortfolioContainer()
         hentPorteføljeEmner(username, password)
     }
-    if(openBtn.id === 'newPortfolioForm')
+    if(openBtn.id === 'uploadButton')
     {
-        addPortfolio(username, password)
+        uploadPost(username, password);
     }
     // For now, just close the modal
     modal.classList.remove('open');
@@ -469,7 +472,6 @@ async function opdaterPortefølje(data) {
         deleteButton.addEventListener('click', function() {
                 deletePoster(id, username, password)
                 emptyPortfolioContainer()
-
                 hentPorteføljeEmner(username, password)
         });
 
