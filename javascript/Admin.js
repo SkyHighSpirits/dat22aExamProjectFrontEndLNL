@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
         uploadButton.addEventListener('click', uploadPost);
     }
 });
-const postUrl = 'localhost:8080/createPost'
+const postUrl = 'localhost:8083/createPost'
 
 function uploadPost() {
     const inputDescription = document.getElementById('description')
@@ -95,7 +95,7 @@ function uploadPost() {
             formdata.append('images', file[i])
         }
 
-        fetch('http://localhost:8080/createPost', {
+        fetch('http://localhost:8083/createPost', {
             method: 'POST',
             body: formdata
         })
