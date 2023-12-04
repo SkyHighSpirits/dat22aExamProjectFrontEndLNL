@@ -309,8 +309,33 @@ document.querySelector('#modal form').addEventListener('submit', function (event
 
 async function addOperation(username, password)
 {
-    //IMPLEMENT YOUR FETCH HERE
-}
+  const operationName = document.getElementById("serviceName").value;
+  const operationDescription = document.getElementById("serviceDescription").value;
+
+  try {
+    const response = await fetch("/createOperation", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        operation_name: operationName,
+        operation_description: operationDescription,
+        username: username,
+        password: password,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const result = await response.text();
+    console.log(result);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
 
 async function deleteOperation(username, password)
 {
