@@ -313,7 +313,7 @@ async function addOperation(username, password)
   const operationDescription = document.getElementById("serviceDescription").value;
 
   try {
-    const response = await fetch("/createOperation", {
+    const response = await fetch("http://localhost:8080/createOperation", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
