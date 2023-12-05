@@ -185,12 +185,13 @@ document.getElementById('showServicesOverviewBtn').addEventListener('click', fun
 document.getElementById('backFromServicesOverview').addEventListener('click', function() {
     console.log('Tilbage-knap for Ydelser klikket');
     document.getElementById('servicesOverview').style.display = 'none';
+    window.location.reload();
 });
 
 // Visning af Tilføj Ydelse Formular
 document.getElementById('addServiceBtn').addEventListener('click', function() {
     console.log('Tilføj Ydelse-knap klikket');
-    emptyOperationsContainer();
+    emptyOperationsContainerAndForms();
     document.getElementById('addServiceForm').style.display = 'block';
     setButtonID('addServiceBtn')
 });
@@ -205,6 +206,7 @@ document.getElementById('editServiceBtn').addEventListener('click', function () 
 document.getElementById('backFromAddService').addEventListener('click', function() {
     console.log('Tilbage fra Tilføj Ydelse-knap klikket');
     document.getElementById('addServiceForm').style.display = 'none';
+    window.location.reload()
 });
 
 // Håndtering af Tilføj Ydelse Formular Indsendelse
@@ -232,6 +234,7 @@ document.getElementById('deleteServiceBtn').addEventListener('click', function()
 document.getElementById('backFromDeleteService').addEventListener('click', function() {
     console.log('Tilbage fra Slet Ydelse-knap klikket');
     document.getElementById('deleteServiceSection').style.display = 'none';
+    window.location.reload();
 });
 
 // ------  COMPANY --------
@@ -240,6 +243,7 @@ document.getElementById('backFromDeleteService').addEventListener('click', funct
 document.getElementById('showCompanyOverviewBtn').addEventListener('click', function() {
     console.log('Oversigt-knap for Company klikket');
     document.getElementById('companyOverview').style.display = 'block';
+    getCompanyInformation();
 });
 
 document.getElementById('backFromCompanyOverview').addEventListener('click', function() {
@@ -305,12 +309,12 @@ document.querySelector('#modal form').addEventListener('submit', function (event
     }
     if(openBtn.id === 'deleteServiceBtn')
     {
-        emptyOperationsContainer()
+        emptyOperationsContainerAndForms()
         getAllOperations(username, password)
     }
     if(openBtn.id === 'editServiceBtn')
     {
-        emptyOperationsContainer()
+        emptyOperationsContainerAndForms()
         getAllOperations(username, password);
     }
     if(openBtn.id === 'deletePortfolioBtn')
@@ -390,38 +394,43 @@ async function getAllOperations(username, password)
         .catch(error => console.error('Fejl ved hentning af poster:', error));
 }
 
-async function editOperation(id, username, password)
-{
-    let operationName = document.getElementById("operationName").value;
-    let operationDescription = document.getElementById("OperationDescription").value;
+async function editOperation(id, username, password) {
+    let operationName = document.getElementById("editServiceName").value;
+    let operationDescription = document.getElementById("editServiceDescription").value;
 
-    let operation = getOperation(id)
-    if(operation !== null)
-    {
-        const updateOperationURL = 'http://localhost:8080/editOperation';
+    let operation = await getOperation(id); // Make sure to await the result of getOperation
+    if (operation !== null) {
+        const updateOperationURL = `http://localhost:8080/editOperation?id=${id}`;
 
+        const params = new URLSearchParams();
+        params.append('operationName', operationName);
+        params.append('operationDescription', operationDescription);
+        params.append('username', username);
+        params.append('password', password);
 
         await fetch(updateOperationURL, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: new URLSearchParams({
-                id: id,
-                operation_name: operationName,
-                operation_description: operationDescription,
-                username: username,
-                password: password
-            }),
+            body: params
         })
-
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Error: ' + response.status);
+                }
+            })
+            .catch(error => {
+                // Handle any errors
+                console.error(error);
+            });
     }
-
 }
 
-async function getOperation(id)
-{
-    const getOperationURL = 'http://localhost:8080/getOperation?d=${id}'
+async function getOperation(id) {
+    const getOperationURL = `http://localhost:8080/getOperation?id=${id}`;
 
     const fetchOptions = {
         method: 'GET',
@@ -430,22 +439,21 @@ async function getOperation(id)
         },
     };
 
-    fetch(getOperationURL, fetchOptions)
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Error: ' + response.status);
-            }
-        })
-        .then(data => {
-            console.log(data);
-            return data;
-        })
-        .catch(error => {
-            // Handle any errors
-            console.error(error);
-        });
+    try {
+        const response = await fetch(getOperationURL, fetchOptions);
+
+        if (response.ok) {
+            console.log("Operation data fetch successful");
+            const data = await response.json();
+            return data; // Return the data here
+        } else {
+            throw new Error('Error: ' + response.status);
+        }
+    } catch (error) {
+        // Handle any errors
+        console.error(error);
+        // You might want to throw the error again or handle it appropriately based on your use case.
+    }
 }
 
 async function deleteOperation(id, username, password)
@@ -488,12 +496,6 @@ async function deletePoster(id, username, password) {
         .catch(error => {
             console.error("Error:", error);
         });
-}
-
-
-async function addPortfolio(username, password)
-{
-    //IMPLEMENT YOUR FETCH HERE
 }
 
 async function getCompanyInformation() {
@@ -659,10 +661,22 @@ function fillOperationsforUpdate(data) {
         console.log(id)
         updateButton.innerText = "Opdater";
 
-        updateButton.addEventListener('click', function() {
-            editOperation(id, username, password)
-            emptyOperationsContainer()
-            getAllOperations(username, password)
+        updateButton.addEventListener('click', function (){
+            document.getElementById('editServiceForm').style.display = 'block';
+
+            let nameField = document.getElementById("editServiceName");
+            let descriptionField = document.getElementById("editServiceDescription");
+                // Use the 'value' property to set input field values
+            nameField.value = item.operation_Name;
+            descriptionField.value = item.operation_Desription;
+
+            submitEditedServiceBtn = document.getElementById("submitEditedServiceBtn");
+            submitEditedServiceBtn.addEventListener('click', function () {
+                editOperation(id, username, password)
+                getAllOperations(username, password)
+                emptyServiceForms()
+            })
+            emptyOperationsContainer();
         });
 
         // Assuming operationsContainer is already defined somewhere in your code
@@ -696,7 +710,7 @@ function fillOperationsforDelete(data) {
 
         deleteButton.addEventListener('click', function() {
             deleteOperation(id, username, password)
-            emptyOperationsContainer()
+            emptyOperationsContainerAndForms()
             getAllOperations(username, password)
         });
 
@@ -713,13 +727,26 @@ function emptyPortfolioContainer() {
     container.innerHTML = '';
 }
 
-function emptyOperationsContainer()
+function emptyOperationsContainerAndForms()
 {
     const container = document.getElementById("operationsContainer");
     document.getElementById("editServiceForm").style.display = 'none';
     document.getElementById('addServiceForm').style.display = 'none';
 
     container.innerHTML = '';
+}
+
+function emptyOperationsContainer()
+{
+    const container = document.getElementById("operationsContainer");
+
+    container.innerHTML = '';
+}
+
+function emptyServiceForms()
+{
+    document.getElementById("editServiceForm").style.display = 'none';
+    document.getElementById('addServiceForm').style.display = 'none';
 }
 
 
