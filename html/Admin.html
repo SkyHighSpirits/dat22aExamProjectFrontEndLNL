@@ -88,11 +88,11 @@
     <!-- Tilføj Ydelse Formular -->
     <div id="addServiceForm" style="display:none;">
         <form id="newServiceForm">
+            <label for="serviceName">Navn:</label>
+            <input type="text" id="serviceName" name="name" required><br><br>
+
             <label for="serviceDescription">Beskrivelse:</label>
             <input type="text" id="serviceDescription" name="description" required><br><br>
-
-            <label for="serviceImage">Billede:</label>
-            <input type="file" id="serviceImage" name="image"><br><br>
 
             <button type="submit">Tilføj</button>
             <button type="button" id="backFromAddService">Tilbage</button>
