@@ -1,5 +1,7 @@
 
 // Add event listener for the "Upload" button
+
+/*
 function createPortfolioForm()
 {
     var parentElement = document.getElementById('addPortfolioForm');
@@ -69,6 +71,8 @@ function createPortfolioForm()
 // Append the form to the parent element
     parentElement.appendChild(formElement);
 }
+ */
+
 
 document.addEventListener('DOMContentLoaded', function() {
     const uploadButton = document.getElementById('uploadButton')
@@ -76,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
         uploadButton.addEventListener('click', uploadPost);
     }
 });
+
 
 function uploadPost(username, password) {
     const inputDescription = document.getElementById('description')
@@ -122,6 +127,7 @@ let password
 document.getElementById('showPortfolioOverviewBtn').addEventListener('click', function() {
     console.log('Portefølje Oversigt-knap klikket');
     document.getElementById('portfolioOverview').style.display = 'block';
+    emptyPortfolioContainer();
 });
 
 document.getElementById('backFromPortfolioOverview').addEventListener('click', function() {
@@ -133,7 +139,6 @@ document.getElementById('backFromPortfolioOverview').addEventListener('click', f
 document.getElementById('addPortfolioBtn').addEventListener('click', function() {
     console.log('Tilføj Portefølje-knap klikket');
     emptyPortfolioContainer();
-    createPortfolioForm();
     document.getElementById('addPortfolioForm').style.display = 'block';
 });
 
@@ -185,8 +190,16 @@ document.getElementById('backFromServicesOverview').addEventListener('click', fu
 // Visning af Tilføj Ydelse Formular
 document.getElementById('addServiceBtn').addEventListener('click', function() {
     console.log('Tilføj Ydelse-knap klikket');
+    emptyOperationsContainer();
     document.getElementById('addServiceForm').style.display = 'block';
+    setButtonID('addServiceBtn')
 });
+
+document.getElementById('editServiceBtn').addEventListener('click', function () {
+    console.log('Edit service knap klikket');
+    setButtonID("editServiceBtn");
+    openModal();
+})
 
 // Skjulning af Tilføj Ydelse Formular
 document.getElementById('backFromAddService').addEventListener('click', function() {
@@ -204,6 +217,8 @@ document.getElementById('newServiceForm').addEventListener('submit', function(ev
     // Skjul formular efter indsendelse
     document.getElementById('addServiceForm').style.display = 'none';
 });
+
+
 
 // Visning og skjulning af Slet Ydelse Sektion
 document.getElementById('deleteServiceBtn').addEventListener('click', function() {
@@ -290,7 +305,13 @@ document.querySelector('#modal form').addEventListener('submit', function (event
     }
     if(openBtn.id === 'deleteServiceBtn')
     {
-        deleteOperation(username, password)
+        emptyOperationsContainer()
+        getAllOperations(username, password)
+    }
+    if(openBtn.id === 'editServiceBtn')
+    {
+        emptyOperationsContainer()
+        getAllOperations(username, password);
     }
     if(openBtn.id === 'deletePortfolioBtn')
     {
@@ -337,7 +358,97 @@ async function addOperation(username, password)
   }
 };
 
-async function deleteOperation(username, password)
+async function getAllOperations(username, password)
+{
+    await fetch(`http://localhost:8080/getAllOperationsIfPassword?username=${username}&password=${password}`)
+        .then(response => {
+            console.log(response)
+            if(response.status === 401)
+            {
+                alert("Forkert password eller username")
+            }
+            else if (!response.ok) {
+                throw new Error('Netværksrespons var ikke ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data)
+            if(openBtn.id === 'editServiceBtn')
+            {
+                fillOperationsforUpdate(data);
+            }
+            else if(openBtn.id === 'deleteServiceBtn')
+            {
+                fillOperationsforDelete(data);
+            }
+            else{
+                console.log("the update or delete button was never pressed")
+            }
+            // Forbereder den næste side
+        })
+        .catch(error => console.error('Fejl ved hentning af poster:', error));
+}
+
+async function editOperation(id, username, password)
+{
+    let operationName = document.getElementById("operationName").value;
+    let operationDescription = document.getElementById("OperationDescription").value;
+
+    let operation = getOperation(id)
+    if(operation !== null)
+    {
+        const updateOperationURL = 'http://localhost:8080/editOperation';
+
+
+        await fetch(updateOperationURL, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: new URLSearchParams({
+                id: id,
+                operation_name: operationName,
+                operation_description: operationDescription,
+                username: username,
+                password: password
+            }),
+        })
+
+    }
+
+}
+
+async function getOperation(id)
+{
+    const getOperationURL = 'http://localhost:8080/getOperation?d=${id}'
+
+    const fetchOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    fetch(getOperationURL, fetchOptions)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Error: ' + response.status);
+            }
+        })
+        .then(data => {
+            console.log(data);
+            return data;
+        })
+        .catch(error => {
+            // Handle any errors
+            console.error(error);
+        });
+}
+
+async function deleteOperation(id, username, password)
 {
     //IMPLEMENT YOUR FETCH HERE
 }
@@ -525,12 +636,90 @@ async function opdaterPortefølje(data) {
     });
 }
 
+function fillOperationsforUpdate(data) {
+    data.forEach(item => {
+        const operationsBox = document.createElement('div');
+        operationsBox.classList.add('operation_box');
+
+        const operationsTitle = document.createElement('div');
+        operationsTitle.classList.add('operation_title');
+        operationsTitle.textContent = item.operation_Name;
+        operationsBox.appendChild(operationsTitle);
+
+        const operationsDescription = document.createElement('div');
+        operationsDescription.classList.add('operation_description');
+        operationsDescription.textContent = item.operation_Desription;
+        operationsBox.appendChild(operationsDescription);
+
+        let updateButton = document.createElement('button');
+        operationsBox.appendChild(updateButton);
+
+        let id = item.operation_Id;
+
+        console.log(id)
+        updateButton.innerText = "Opdater";
+
+        updateButton.addEventListener('click', function() {
+            editOperation(id, username, password)
+            emptyOperationsContainer()
+            getAllOperations(username, password)
+        });
+
+        // Assuming operationsContainer is already defined somewhere in your code
+        operationsContainer.appendChild(operationsBox);
+    });
+
+}
+
+function fillOperationsforDelete(data) {
+    data.forEach(item => {
+        const operationsBox = document.createElement('div');
+        operationsBox.classList.add('operation_box');
+
+        const operationsTitle = document.createElement('div');
+        operationsTitle.classList.add('operation_title');
+        operationsTitle.textContent = item.operation_Name;
+        operationsBox.appendChild(operationsTitle);
+
+        const operationsDescription = document.createElement('div');
+        operationsDescription.classList.add('operation_description');
+        operationsDescription.textContent = item.operation_Desription;
+        operationsBox.appendChild(operationsDescription);
+
+        let deleteButton = document.createElement('button');
+        operationsBox.appendChild(deleteButton);
+
+        let id = item.operation_Id;
+
+        console.log(id)
+        deleteButton.innerText = "Slet";
+
+        deleteButton.addEventListener('click', function() {
+            deleteOperation(id, username, password)
+            emptyOperationsContainer()
+            getAllOperations(username, password)
+        });
+
+        // Assuming operationsContainer is already defined somewhere in your code
+        operationsContainer.appendChild(operationsBox);
+    });
+
+}
+
 function emptyPortfolioContainer() {
     const container = document.getElementById("porteføljeContainer");
-    const addPortfolioForm = document.getElementById("addPortfolioForm");
+    document.getElementById("addPortfolioForm").style.display = 'none';
 
     container.innerHTML = '';
-    addPortfolioForm.innerHTML = '';
+}
+
+function emptyOperationsContainer()
+{
+    const container = document.getElementById("operationsContainer");
+    document.getElementById("editServiceForm").style.display = 'none';
+    document.getElementById('addServiceForm').style.display = 'none';
+
+    container.innerHTML = '';
 }
 
 

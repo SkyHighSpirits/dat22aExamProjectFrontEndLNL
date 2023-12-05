@@ -74,10 +74,14 @@
 
 <!-- Ydelser Sektion -->
 <div class="section">
-    <h2>Ydelser</h2>
-    <button id="showServicesOverviewBtn">Oversigt</button>
-    <button id="addServiceBtn">Tilføj</button>
-    <button id="deleteServiceBtn">Slet</button>
+    <div id="operationsButtonContainer">
+        <h2>Ydelser</h2>
+        <button id="showServicesOverviewBtn">Oversigt</button>
+        <button id="addServiceBtn">Tilføj</button>
+        <button id="deleteServiceBtn">Slet</button>
+        <button id="editServiceBtn">Opdater</button>
+        <div id="operationsContainer"></div>
+    </div>
 
     <!-- Ydelser Oversigt Sektion -->
     <div id="servicesOverview" style="display:none;">
@@ -99,6 +103,23 @@
         </form>
     </div>
 
+    <!-- Opdater Ydelse Formular -->
+    <div id="editServiceForm" style="display:none;">
+        <form id="editedServiceForm">
+            <input type="hidden" id="editServiceId" name="id" required>
+
+            <label for="serviceName">Navn:</label>
+            <input type="text" id="editServiceName" name="name" required><br><br>
+
+            <label for="serviceDescription">Beskrivelse:</label>
+            <input type="text" id="editServiceDescription" name="description" required><br><br>
+
+            <button type="submit">Opdater</button>
+            <button type="button" id="backFromEditService">Tilbage</button>
+        </form>
+    </div>
+
+
     <!-- Slet Ydelse Sektion -->
     <div id="deleteServiceSection" style="display:none;">
         <!-- Dynamisk indhold for sletning af ydelser -->
@@ -110,6 +131,10 @@
         <button id="backFromDeleteService">Tilbage</button>
     </div>
 </div>
+
+
+
+
 
 <!-- Company Sektion -->
 <div class="section">
