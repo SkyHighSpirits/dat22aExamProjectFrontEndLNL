@@ -398,6 +398,8 @@ async function editOperation(id, username, password) {
     let operationName = document.getElementById("editServiceName").value;
     let operationDescription = document.getElementById("editServiceDescription").value;
 
+    console.log(id + " is the editID")
+
     let operation = await getOperation(id); // Make sure to await the result of getOperation
     if (operation !== null) {
         const updateOperationURL = `http://localhost:8080/editOperation?id=${id}`;
@@ -417,14 +419,14 @@ async function editOperation(id, username, password) {
         })
             .then(response => {
                 if (response.ok) {
-                    return response.json();
+                    console.log("Update operation request was succesfull")
                 } else {
                     throw new Error('Error: ' + response.status);
                 }
             })
             .catch(error => {
                 // Handle any errors
-                console.error(error);
+                console.log(error);
             });
     }
 }
@@ -671,10 +673,10 @@ function fillOperationsforUpdate(data) {
             descriptionField.value = item.operation_Desription;
 
             submitEditedServiceBtn = document.getElementById("submitEditedServiceBtn");
-            submitEditedServiceBtn.addEventListener('click', function () {
+            submitEditedServiceBtn.addEventListener('click', async function () {
                 editOperation(id, username, password)
-                getAllOperations(username, password)
                 emptyServiceForms()
+                await getAllOperations(username, password)
             })
             emptyOperationsContainer();
         });
