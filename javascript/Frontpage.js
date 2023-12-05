@@ -4,9 +4,22 @@ import { callNavbarTemplate, callFooterTemplate } from "./template.js";
 document.addEventListener("DOMContentLoaded", function () {
     callNavbarTemplate()
     callFooterTemplate()
+    rotateCarousel()
 });
 
 let contactForm = document.getElementById("contact-form");
+
+function rotateCarousel(){
+    var counter = 1
+    setInterval(function (){
+        document.getElementById('radio'+ counter).checked = true
+        counter++
+        if(counter > 6){
+            counter = 1;
+        }
+
+    }, 5000)
+}
 
 if (contactForm) {
     contactForm.addEventListener("submit", function (event) {

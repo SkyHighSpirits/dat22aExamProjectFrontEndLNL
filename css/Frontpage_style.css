@@ -1,12 +1,102 @@
 /* Frontpage image css start */
+/* Frontpage image css start */
+/*auto karrusel */
 .frontImage-container{
     width: 100%;
     height: 700px;
+    overflow: hidden;
+}
+.frontPageImage{
+    width: 100%;
+    height:720px;
+
+}
+.slides{
+    width: 1000%;
+    height: auto;
+    display: flex;
+}
+.slides input{
+    display: none;
+}
+.slide{
+    transition: 2s;
+}
+/* manuel karrusel  */
+.navigation-manuel{
+    position: absolute;
+    width: 100%;
+    margin-top: -10%;
+    display: flex;
+    justify-content: center;
+
+}
+.manuel-btn{
+    border: 2px solid;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 1s;
+}
+.manuel-btn:not(:last-child){
+    margin-right: 40px;
+}
+.manuel-btn:hover{
+    background: black;
+}
+#radio1:checked ~ .first{
+    margin-left: 0;
+}
+#radio2:checked ~ .first{
+    margin-left: -12%;
+}
+#radio3:checked ~ .first{
+    margin-left: -24%;
+}
+#radio4:checked ~ .first{
+    margin-left: -35%;
+}
+#radio5:checked ~ .first{
+    margin-left: -46%;
+}
+#radio6:checked ~ .first{
+    margin-left: -57%;
 }
 
-.frontPageImage{
-    width: 100vw;
-    height:720px;
+/* Css for auto rotation */
+.navigation-auto{
+    position: absolute;
+    display:flex;
+    width:800px;
+    justify-content: center;
+    padding-top: 94%;
+}
+.navigation-auto div{
+    border: 2px solid black;
+    padding: 5px;
+    border-radius: 10px;
+    transition: 1s;
+}
+.navigation-auto div:not(:last-child){
+    margin-right: 40px;
+}
+#radio1:checked ~ .navigation-auto .auto-btn1{
+    background: black;
+}
+#radio2:checked ~ .navigation-auto .auto-btn1{
+    background: black;
+}
+#radio3:checked ~ .navigation-auto .auto-btn1{
+    background: black;
+}
+#radio4:checked ~ .navigation-auto .auto-btn1{
+    background: black;
+}
+#radio5:checked ~ .navigation-auto .auto-btn1{
+    background: black;
+}
+#radio6:checked ~ .navigation-auto .auto-btn1{
+    background: black;
 }
 /* Frontpage image css end */
 
