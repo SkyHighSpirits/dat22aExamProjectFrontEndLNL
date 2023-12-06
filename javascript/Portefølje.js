@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     hentYdelser();
     hentPorteføljeEmner(); // Henter de første portefølje-emner ved indlæsning
 });
+const overlay = document.getElementById('overlay')
 
 function hentYdelser() {
     fetch('http://localhost:8080/api/operations')
@@ -88,17 +89,31 @@ function opdaterPortefølje(data) {
 }
 
 function openLargeImagePopup(imageSrc) {
+    //laver et div element der får classen image-popup og som får imageSrc der er klikket på som innerHTML text.
     const popup = document.createElement('div');
     popup.classList.add('image-popup');
     popup.innerHTML = `<img src="${imageSrc}" alt="Large Image">`;
 
-    // Append the popup to the body
+    // appender popup elementet til bodien på HTML siden
     document.body.appendChild(popup);
 
-    // Add a click event listener to close the popup when clicked
-    popup.addEventListener('click', function () {
-        document.body.removeChild(popup);
-    });
+    //laver et overlay Element er får et id "overlay" og en klasse aktiv, det bliver derefter tilføjet til bodien på htmlsiden
+    const overlay = document.createElement('div');
+    overlay.id = 'overlay';
+    overlay.classList.add('active');
+    document.body.appendChild(overlay);
+
+    //eventlister der lukker Popup hvis overlay bliver klikket.
+    overlay.addEventListener('click', function (){
+        closePopup(popup, overlay)
+    })
+
+}
+// luk Popup funktionen:
+function closePopup(popup, overlay) {
+    // disse to fjerner popup og overlay elementer fra bodien på html siden.
+    document.body.removeChild(popup);
+    document.body.removeChild(overlay);
 }
 // Funktion til at indlæse flere emner
 function loadMore() {
@@ -106,6 +121,8 @@ function loadMore() {
 }
 
 
+
+ // eventlistener der lytter efter et klik, hvis der bliver klikket på et element der har "clickable-image" som klasse navn så kalder den funktionen OpenLargeImagePopup
 document.addEventListener('click', function (event) {
     //hvis elemented har clickable-image class så :
     if (event.target.classList.contains('clickable-image')) {
