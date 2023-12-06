@@ -1,79 +1,4 @@
 
-// Add event listener for the "Upload" button
-
-/*
-function createPortfolioForm()
-{
-    var parentElement = document.getElementById('addPortfolioForm');
-
-// Create the form element
-    var formElement = document.createElement('form');
-    formElement.id = 'newPortfolioForm';
-
-// Create the label for the title input
-    var titleLabel = document.createElement('label');
-    titleLabel.setAttribute('for', 'titleinput');
-    titleLabel.textContent = 'Titel';
-    formElement.appendChild(titleLabel);
-
-// Create the title input element
-    var titleInput = document.createElement('input');
-    titleInput.type = 'text';
-    titleInput.id = 'titleinput';
-    titleInput.name = 'titleinput';
-    formElement.appendChild(titleInput);
-    formElement.appendChild(document.createElement('br'));
-
-// Create the label for the description input
-    var descriptionLabel = document.createElement('label');
-    descriptionLabel.setAttribute('for', 'description');
-    descriptionLabel.textContent = 'Beskrivelse';
-    formElement.appendChild(descriptionLabel);
-
-// Create the description input element
-    var descriptionInput = document.createElement('input');
-    descriptionInput.type = 'text';
-    descriptionInput.id = 'description';
-    descriptionInput.name = 'description';
-    formElement.appendChild(descriptionInput);
-    formElement.appendChild(document.createElement('br'));
-
-// Create the file input element
-    var fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.id = 'imageInput';
-    fileInput.accept = 'image/*';
-    fileInput.multiple = true;
-    fileInput.required = true;
-    formElement.appendChild(fileInput);
-    formElement.appendChild(document.createElement('br'));
-
-// Create the Upload button
-    var uploadButton = document.createElement('button');
-    uploadButton.type = 'button';
-    uploadButton.id = 'uploadButton';
-    uploadButton.textContent = 'Upload';
-    formElement.appendChild(uploadButton);
-
-    uploadButton.addEventListener('click', function()
-    {
-        openModal()
-        setButtonID("uploadButton")
-    });
-
-// Create the Back button
-    var backButton = document.createElement('button');
-    backButton.type = 'button';
-    backButton.id = 'backFromAddPortfolio';
-    backButton.textContent = 'Tilbage';
-    formElement.appendChild(backButton);
-
-// Append the form to the parent element
-    parentElement.appendChild(formElement);
-}
- */
-
-
 document.addEventListener('DOMContentLoaded', function() {
     const uploadButton = document.getElementById('uploadButton')
     if (uploadButton) {
@@ -362,6 +287,36 @@ async function addOperation(username, password)
   }
 };
 
+async function deleteOperation(id, username, password) {
+    const url = `http://localhost:8080/deleteOperation?operation_id=${id}&username=${username}&password=${password}`;
+
+    // Fetch options for DELETE request
+    const fetchOptions = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    // Make the fetch request
+    await fetch(url, fetchOptions)
+        .then(response => {
+            if (response.ok) {
+                console.log("Operation slettet");
+                // Opdater eventuelt UI her
+            } else if (response.status === 404) {
+                console.log("Operation ikke fundet");
+            } else if (response.status === 401) {
+                console.log("Uautoriseret adgang");
+            } else {
+                console.error("Fejl ved sletning af operation");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+}
+
 async function getAllOperations(username, password)
 {
     await fetch(`http://localhost:8080/getAllOperationsIfPassword?username=${username}&password=${password}`)
@@ -458,10 +413,6 @@ async function getOperation(id) {
     }
 }
 
-async function deleteOperation(id, username, password)
-{
-    //IMPLEMENT YOUR FETCH HERE
-}
 
 async function deletePoster(id, username, password) {
     // API endpoint for deletePoster
