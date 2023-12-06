@@ -1,9 +1,11 @@
 
 document.addEventListener('DOMContentLoaded', function() {
-    const uploadButton = document.getElementById('uploadButton')
-    if (uploadButton) {
-        uploadButton.addEventListener('click', uploadPost);
-    }
+
+    document.getElementById("showPortfolioOverviewBtn").style.display = "none";
+    document.getElementById("showServicesOverviewBtn").style.display = "none";
+    document.getElementById("showCompanyOverviewBtn").style.display = "none";
+
+
 });
 
 
@@ -32,7 +34,18 @@ function uploadPost(username, password) {
             method: 'POST',
             body: formdata
         })
-            .then(response => response.text())
+            .then(response => {
+                if (response.status === 200) {
+                    alert("Portefølge opslaget blev tilføjet succesfuldt!")
+                }
+                else if(response.status === 401)
+                {
+                    alert("Wrong username or password! Try again")
+                }
+                else {
+                    throw new Error('Error: ' + response.status);
+                }
+            })
             .then(data => {
                 document.getElementById('response').innerText = data;
             })
@@ -118,6 +131,7 @@ document.getElementById('addServiceBtn').addEventListener('click', function() {
     console.log('Tilføj Ydelse-knap klikket');
     emptyOperationsContainerAndForms();
     document.getElementById('addServiceForm').style.display = 'block';
+    document.getElementById('backFromDeleteService').style.display = 'none'
     setButtonID('addServiceBtn')
 });
 
@@ -247,7 +261,7 @@ document.querySelector('#modal form').addEventListener('submit', function (event
         emptyPortfolioContainer()
         hentPorteføljeEmner(username, password)
     }
-    if(openBtn.id === 'uploadButton')
+    if(openBtn.id === 'newPortfolioForm')
     {
         uploadPost(username, password);
     }
@@ -276,7 +290,11 @@ async function addOperation(username, password)
       }),
     });
 
+    if (response.ok) {
+          alert("Du tilføjede en ny Service succesfuldt!")
+    }
     if (!response.ok) {
+        alert("Der skete en fejl!")
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
@@ -305,6 +323,7 @@ async function deleteOperation(id, username, password) {
             if (response.ok) {
                 console.log("Operation slettet");
                 console.log(response)
+                alert("Din service blev slettet succesfuldt!")
                 // Opdater eventuelt UI her
             } else if (response.status === 404) {
                 console.log("Operation ikke fundet");
@@ -377,6 +396,7 @@ async function editOperation(id, username, password) {
             .then(response => {
                 if (response.ok) {
                     console.log("Update operation request was succesfull")
+                    alert("Opdateringen af din service var succesfuld!")
                 } else {
                     throw new Error('Error: ' + response.status);
                 }
@@ -432,7 +452,7 @@ async function deletePoster(id, username, password) {
     await fetch(url, fetchOptions)
         .then(response => {
             if (response.ok) {
-                // Poster deleted successfully
+                alert("Dit portefølge opslag blev slettet succesfuldt!")
                 console.log("Poster deleted successfully");
             } else if (response.status === 404) {
                 // Poster not found
@@ -562,10 +582,10 @@ async function opdaterPortefølje(data) {
         console.log(id)
         deleteButton.innerText = "Delete";
 
-        deleteButton.addEventListener('click', function() {
-                deletePoster(id, username, password)
+        deleteButton.addEventListener('click', async function() {
+                await deletePoster(id, username, password)
                 emptyPortfolioContainer()
-                hentPorteføljeEmner(username, password)
+                await hentPorteføljeEmner(username, password)
         });
 
         const titelDiv = document.createElement("div")
