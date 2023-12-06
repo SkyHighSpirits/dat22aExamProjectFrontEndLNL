@@ -613,35 +613,43 @@ function fillOperationsforUpdate(data) {
 
         let id = item.operation_Id;
 
-        console.log(id)
+        console.log(id);
         updateButton.innerText = "Opdater";
 
-        updateButton.addEventListener('click', function (){
+        updateButton.addEventListener('click', function () {
+            emptyOperationsContainer();
             document.getElementById('editServiceForm').style.display = 'block';
 
             let nameField = document.getElementById("editServiceName");
             let descriptionField = document.getElementById("editServiceDescription");
-                // Use the 'value' property to set input field values
+            // Use the 'value' property to set input field values
             nameField.value = item.operation_Name;
             descriptionField.value = item.operation_Desription;
 
-            submitEditedServiceBtn = document.getElementById("submitEditedServiceBtn");
+            // Create submitEditedServiceBtn dynamically when updateButton is clicked
+            let submitEditedServiceBtn = document.getElementById("submitEditedServiceBtn");
+
             submitEditedServiceBtn.addEventListener('click', async function () {
-                editOperation(id, username, password)
-                emptyServiceForms()
-                await getAllOperations(username, password)
-            })
-            emptyOperationsContainer();
+                try {
+                    console.log(username, password);
+                    await editOperation(id, username, password);
+                    await emptyServiceForms();
+                    await getAllOperations(username, password);
+                } catch (error) {
+                    console.error("Error editing operation:", error);
+                }
+            });
         });
 
         // Assuming operationsContainer is already defined somewhere in your code
         operationsContainer.appendChild(operationsBox);
     });
-
 }
 
-function fillOperationsforDelete(data) {
-    data.forEach(item => {
+async function fillOperationsforDelete(data) {
+    const operationsContainer = document.getElementById('operationsContainer');
+
+    for (const item of data) {
         const operationsBox = document.createElement('div');
         operationsBox.classList.add('operation_box');
 
@@ -660,19 +668,23 @@ function fillOperationsforDelete(data) {
 
         let id = item.operation_Id;
 
-        console.log(id)
+        console.log(id);
         deleteButton.innerText = "Slet";
 
         deleteButton.addEventListener('click', async function() {
-            deleteOperation(id, username, password)
-            emptyOperationsContainerAndForms()
-            getAllOperations(username, password)
+            try {
+                await deleteOperation(id, username, password);
+
+                emptyOperationsContainerAndForms();
+
+                await getAllOperations(username, password);
+            } catch (error) {
+                console.error("Error deleting operation:", error);
+            }
         });
 
-        // Assuming operationsContainer is already defined somewhere in your code
         operationsContainer.appendChild(operationsBox);
-    });
-
+    }
 }
 
 function emptyPortfolioContainer() {
