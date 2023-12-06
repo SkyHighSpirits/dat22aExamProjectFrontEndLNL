@@ -1,5 +1,4 @@
 /* Frontpage image css start */
-/* Frontpage image css start */
 /*auto karrusel */
 .frontImage-container{
     width: 100%;
@@ -66,10 +65,10 @@
 /* Css for auto rotation */
 .navigation-auto{
     position: absolute;
-    display:flex;
-    width:800px;
+    width: 100%;
+    margin-top: -10%;
+    display: flex;
     justify-content: center;
-    padding-top: 94%;
 }
 .navigation-auto div{
     border: 2px solid black;
