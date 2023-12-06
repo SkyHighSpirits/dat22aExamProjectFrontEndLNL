@@ -290,6 +290,7 @@ async function addOperation(username, password)
 async function deleteOperation(id, username, password) {
     const url = `http://localhost:8080/deleteOperation?operation_id=${id}&username=${username}&password=${password}`;
 
+    console.log(url)
     // Fetch options for DELETE request
     const fetchOptions = {
         method: 'DELETE',
@@ -303,6 +304,7 @@ async function deleteOperation(id, username, password) {
         .then(response => {
             if (response.ok) {
                 console.log("Operation slettet");
+                console.log(response)
                 // Opdater eventuelt UI her
             } else if (response.status === 404) {
                 console.log("Operation ikke fundet");
@@ -661,7 +663,7 @@ function fillOperationsforDelete(data) {
         console.log(id)
         deleteButton.innerText = "Slet";
 
-        deleteButton.addEventListener('click', function() {
+        deleteButton.addEventListener('click', async function() {
             deleteOperation(id, username, password)
             emptyOperationsContainerAndForms()
             getAllOperations(username, password)
