@@ -27,7 +27,7 @@ function uploadPost(username, password) {
             formdata.append('images', file[i])
         }
 
-        fetch('http://localhost:8080/createPost', {
+        fetch(globalURL+'/createPost', {
             method: 'POST',
             body: formdata
         })
@@ -274,7 +274,7 @@ async function addOperation(username, password)
   const operationDescription = document.getElementById("serviceDescription").value;
 
   try {
-    const response = await fetch("http://localhost:8080/createOperation", {
+    const response = await fetch( globalURL+"/createOperation", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -303,7 +303,7 @@ async function addOperation(username, password)
 };
 
 async function deleteOperation(id, username, password) {
-    const url = `http://localhost:8080/deleteOperation?operation_id=${id}&username=${username}&password=${password}`;
+    const url = globalURL+`/deleteOperation?operation_id=${id}&username=${username}&password=${password}`;
 
     console.log(url)
     // Fetch options for DELETE request
@@ -337,7 +337,7 @@ async function deleteOperation(id, username, password) {
 
 async function getAllOperations(username, password)
 {
-    await fetch(`http://localhost:8080/getAllOperationsIfPassword?username=${username}&password=${password}`)
+    await fetch(globalURL+`/getAllOperationsIfPassword?username=${username}&password=${password}`)
         .then(response => {
             console.log(response)
             if(response.status === 401)
@@ -375,7 +375,7 @@ async function editOperation(id, username, password) {
 
     let operation = await getOperation(id); // Make sure to await the result of getOperation
     if (operation !== null) {
-        const updateOperationURL = `http://localhost:8080/editOperation?id=${id}`;
+        const updateOperationURL = globalURL+`/editOperation?id=${id}`;
 
         const params = new URLSearchParams();
         params.append('operationName', operationName);
@@ -406,7 +406,7 @@ async function editOperation(id, username, password) {
 }
 
 async function getOperation(id) {
-    const getOperationURL = `http://localhost:8080/getOperation?id=${id}`;
+    const getOperationURL = globalURL+`/getOperation?id=${id}`;
 
     const fetchOptions = {
         method: 'GET',
@@ -435,7 +435,7 @@ async function getOperation(id) {
 
 async function deletePoster(id, username, password) {
     // API endpoint for deletePoster
-    const url = `http://localhost:8080/deletePoster?poster_id=${id}&username=${username}&password=${password}`;
+    const url = globalURL+`/deletePoster?poster_id=${id}&username=${username}&password=${password}`;
 
     // Fetch options for DELETE request
     const fetchOptions = {
@@ -472,7 +472,7 @@ async function deletePoster(id, username, password) {
 
 async function getCompanyInformation() {
     try {
-        const response = await fetch("http://localhost:8080/company")
+        const response = await fetch(globalURL+"/company")
 
         const data = await response.json();
         if (response.ok) {
@@ -542,7 +542,7 @@ async function updateCompanyInformation(username, password) {
 
 async function hentPorteføljeEmner(username, password) {
 
-    await fetch(`http://localhost:8080/getPostsPwd?username=${username}&password=${password}`)
+    await fetch(globalURL+`/getPostsPwd?username=${username}&password=${password}`)
         .then(response => {
             if(response.status === 401)
             {
@@ -577,7 +577,7 @@ async function opdaterPortefølje(data) {
         deleteButton.className = "deletePortfolioButton";
         let id = item.poster.id
         console.log(id)
-        deleteButton.innerText = "Delete";
+        deleteButton.innerText = "Slet";
 
         deleteButton.addEventListener('click', async function() {
                 await deletePoster(id, username, password)

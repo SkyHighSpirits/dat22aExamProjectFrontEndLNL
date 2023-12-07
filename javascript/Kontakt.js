@@ -36,7 +36,7 @@ if (contactForm) {
         const formData = new FormData(contactForm);
         const requestData = new URLSearchParams(formData);
 
-        fetch('http://localhost:8080/send-email', {
+        fetch(globalURL+'/send-email', {
             method: 'POST',
             body: requestData,
             headers: {

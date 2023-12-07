@@ -14,7 +14,7 @@ let operationsContainer = document.getElementById('operations_container');
 
 async function fetchAllOperations()
 {
-    await fetch('http://localhost:8080/getAllOperations')
+    await fetch(globalURL+'/getAllOperations')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);

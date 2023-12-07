@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
 const overlay = document.getElementById('overlay')
 
 function hentYdelser() {
-    fetch('http://localhost:8080/api/operations')
+    fetch(globalURL+'/api/operations')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Netværksrespons var ikke ok');
@@ -36,7 +36,7 @@ function opdaterDropdown(data) {
 
 function hentPorteføljeEmner() {
     // Ændring foretaget her: Antallet af emner pr. side sat til 3
-    fetch(`http://localhost:8080/getPosts?page=${currentPage}&size=3`)
+    fetch(globalURL+`/getPosts?page=${currentPage}&size=3`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Netværksrespons var ikke ok');

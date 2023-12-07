@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function fetchData() {
     try {
-        const response = await fetch("http://localhost:8080/company")
+        const response = await fetch(globalURL+"/company")
 
         const data = await response.json();
         if (response.ok) {
@@ -30,9 +30,11 @@ async function fetchData() {
             // Now you can access elements safely because the DOM has fully loaded
             let title = document.getElementById("title");
             let description = document.getElementById("description");
+            var formattedText = data.company_Description.replace(/\n\n/g, '<p></p><br>');
 
             title.innerHTML = data.company_Title;
-            description.innerHTML = data.company_Description;
+
+            description.innerHTML = formattedText;
         } else {
             console.log("Could not fetch data");
         }

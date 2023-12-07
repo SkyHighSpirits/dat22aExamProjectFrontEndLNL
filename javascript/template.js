@@ -60,7 +60,7 @@ function addFooterNavEventListeners() {
 
 async function callCompanyInformation() {
     try {
-        const response = await fetch("http://localhost:8080/company")
+        const response = await fetch(globalURL+"/company")
 
         const data = await response.json();
         if (response.ok)

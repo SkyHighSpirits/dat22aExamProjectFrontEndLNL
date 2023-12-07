@@ -7,10 +7,16 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 40px;
-    width: 60%;
-    margin-left: 335px;
+    width: 70%;
     margin-top: 100px;
     margin-bottom: 100px;
+}
+
+#content-container
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .info-container img {
@@ -26,7 +32,7 @@ body {
 
 .info-container p {
     color: black;
-    padding-right: 20px;
+    padding-right: 40px;
 }
 
 .info-container button {
