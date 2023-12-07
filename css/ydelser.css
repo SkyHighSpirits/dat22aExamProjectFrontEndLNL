@@ -1,13 +1,13 @@
 .operation_box
 {
     width: 60%;
+    max-width: 60%;
     margin: 20px;
     padding: 40px 10px;
     background-color: #f3f3f3; /* Baggrundsfarve som eksempel */
     border: 1px solid #ddd;
     border-radius: 5px;
     display: flex;
-    background-color: #f8f8f8;
 
 }
 
@@ -21,7 +21,7 @@
 
 .operation_description_box
 {
-    width: 70%;
+    width: 60%;
     justify-content: flex-start;
 }
 
@@ -34,3 +34,25 @@
 {
     margin: 40px 30px;
 }
+
+.operation_contact_btn_box
+{
+    width: 10%;
+}
+
+.operation_contact_btn
+{
+    height: 40px;
+    width: 80px;
+    color: #ffffff;
+    background-color: #9c523b;
+    border-radius: 5px;
+    border: none;
+    margin-right: 20px;
+}
+
+.operation_contact_btn:hover
+{
+    background-color: #45a049;
+}
+

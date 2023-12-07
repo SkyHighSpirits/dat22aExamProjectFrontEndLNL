@@ -53,6 +53,27 @@ async function createOperations(data) {
         operationsBox.appendChild(operationsDescriptionBox);
         operationsDescriptionBox.appendChild(operationsDescription)
 
+        const operationContactBtn = document.createElement('button')
+        const operationContactBtnBox = document.createElement('div')
+        operationContactBtn.textContent = "Få et tilbud";
+        operationContactBtnBox.classList = "operation_contact_btn_box"
+        operationContactBtn.classList = "operation_contact_btn"
+        operationsBox.appendChild(operationContactBtnBox)
+        operationContactBtnBox.appendChild(operationContactBtn)
+        operationContactBtn.addEventListener('click', function()
+        {
+            // Assuming you have two variables: var1 and var2
+            var name = item.operation_Name;
+            var description = item.operation_Desription;
+
+            // Construct the query string
+            var queryString = `?name=${encodeURIComponent(name)}&description=${encodeURIComponent(description)}`;
+
+            // Change the page with the constructed query string
+            window.location.href = 'KontaktPage.html' + queryString;
+
+        })
+
         // Assuming operationsContainer is already defined somewhere in your code
         operationsContainer.appendChild(operationsBox);
     });

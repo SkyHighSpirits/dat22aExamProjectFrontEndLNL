@@ -1,9 +1,29 @@
 import { callNavbarTemplate, callFooterTemplate, changeToKontakt, changeToForside, changeToYdelser, changeToPortefolje, changeToOmMig } from "./template.js";
 
+function getParameterByName(element_name, url) {
+    if (!url) url = window.location.href;
+    element_name = element_name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + element_name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 document.addEventListener("DOMContentLoaded", function () {
-    callNavbarTemplate()
-    callFooterTemplate()
+    callNavbarTemplate();
+    callFooterTemplate();
+
+    var name = getParameterByName('name');
+    var description = getParameterByName('description');
+
+    if (name !== null && description !== null) {
+        // Set the inner text of the "about" element with the values from the query parameters
+        document.getElementById("about").value = "Tilbud på " + name;
+        document.getElementById("message").value = "Ønsket service: " + description;
+    }
 });
+
 
 // Ingen yderligere kode er nødvendig her for at tilknytte event listeners til navigationsknapperne,
 // da dette nu håndteres i 'template.js'.
@@ -25,10 +45,11 @@ if (contactForm) {
         })
             .then(response => {
                 if (response.ok) {
+                    alert("Email sendt. Vi svarer tilbage ved første ledige lejlighed")
                     console.log('Email sent successfully!');
                 } else {
                     console.log(response);
-                    alert("Failed to send email, server is too busy, try again in 3 seconds")
+                    alert("Fejl ved afsendelse af email!\n\n Årsag: serveren har for tralvt, prøv igen om 5 sekunder")
                     console.log('Failed to send email');
                 }
             })
