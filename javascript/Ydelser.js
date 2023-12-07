@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
     callNavbarTemplate()
     callFooterTemplate()
     fetchAllOperations()
-    createOperations(operationsData)
 });
 
 let operationsContainer = document.getElementById('operations_container');
@@ -22,8 +21,9 @@ async function fetchAllOperations()
             }
             return response.json();
         })
-        .then(data => {
-            operationsData = data;
+        .then(async data => {
+            await console.log(data)
+            await createOperations(data)
             console.log('Operations:', data);
         })
         .catch(error => {
@@ -32,20 +32,26 @@ async function fetchAllOperations()
         });
 }
 
-function createOperations(data) {
-    data.forEach(item => {
+async function createOperations(data) {
+    await data.forEach(item => {
         const operationsBox = document.createElement('div');
         operationsBox.classList.add('operation_box');
 
-        const operationsTitle = document.createElement('div');
+        const operationsTitleBox = document.createElement('div');
+        const operationsTitle = document.createElement('p');
+        operationsTitleBox.classList.add('operation_title_box');
         operationsTitle.classList.add('operation_title');
-        operationsTitle.textContent = item.operation.operation_name;
-        operationsBox.appendChild(operationsTitle);
+        operationsTitle.textContent = item.operation_Name;
+        operationsBox.appendChild(operationsTitleBox)
+        operationsTitleBox.appendChild(operationsTitle);
 
-        const operationsDescription = document.createElement('div');
+        const operationsDescriptionBox = document.createElement('div');
+        const operationsDescription = document.createElement('p');
+        operationsDescriptionBox.classList.add('operation_description_box');
         operationsDescription.classList.add('operation_description');
-        operationsDescription.textContent = item.operation.operation_description;
-        operationsBox.appendChild(operationsDescription);
+        operationsDescription.textContent = item.operation_Desription;
+        operationsBox.appendChild(operationsDescriptionBox);
+        operationsDescriptionBox.appendChild(operationsDescription)
 
         // Assuming operationsContainer is already defined somewhere in your code
         operationsContainer.appendChild(operationsBox);

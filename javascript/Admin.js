@@ -4,10 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById("showPortfolioOverviewBtn").style.display = "none";
     document.getElementById("showServicesOverviewBtn").style.display = "none";
     document.getElementById("showCompanyOverviewBtn").style.display = "none";
-
-
 });
-
 
 function uploadPost(username, password) {
     const inputDescription = document.getElementById('description')

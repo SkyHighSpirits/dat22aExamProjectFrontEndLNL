@@ -1,0 +1,30 @@
+.operation_box
+{
+    width: 60%;
+    margin: 20px;
+    padding: 20px 10px;
+    background-color: #f3f3f3; /* Baggrundsfarve som eksempel */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+    background-color: #f8f8f8;
+
+}
+
+.operation_title_box
+{
+    padding-left: 30px;
+    width: 30%;
+    justify-content: center;
+
+}
+
+.operation_description_box
+{
+    width: 70%;
+    justify-content: flex-start;
+}
+
+.operation_title
+{
+}
