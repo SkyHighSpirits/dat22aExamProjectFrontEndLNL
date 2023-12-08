@@ -13,8 +13,7 @@ let companyTitle;
 let phone;
 let cvr;
 
-// skal email også sættes?
-let email = document.getElementById("email-field")
+
 
 function callFooterTemplate() {
 
@@ -41,7 +40,7 @@ function addNavEventListeners() {
     if (pbKontaktButton) pbKontaktButton.addEventListener('click', changeToKontakt);
 }
 
-function addFooterNavEventListeners() {
+function addFooterNavEventListeners(data) {
     const footerForsideButton = document.getElementById("footerForsideButton");
     const footerPortefoljeButton = document.getElementById("footerPortefoljeButton");
     const footerYdelserButton = document.getElementById("footerYdelserButton");
@@ -50,6 +49,13 @@ function addFooterNavEventListeners() {
     companyTitle = document.getElementById("title-field")
     phone = document.getElementById("phone-field")
     cvr = document.getElementById("cvr-field")
+    console.log(companyTitle.value)
+    console.log(phone.value)
+    console.log(cvr.value)
+
+    companyTitle.innerHTML = data.company_Title;
+    phone.innerHTML = "Telefon: " + data.telephone;
+    cvr.innerHTML = "Cvr: " + data.cvr;
 
     if (footerForsideButton) footerForsideButton.addEventListener('click', changeToForside);
     if (footerPortefoljeButton) footerPortefoljeButton.addEventListener('click', changeToPortefolje);
@@ -65,10 +71,7 @@ async function callCompanyInformation() {
         const data = await response.json();
         if (response.ok)
         {
-            addFooterNavEventListeners();
-            companyTitle.innerHTML = data.company_Title;
-            phone.innerHTML = "Telefon: " + data.telephone;
-            cvr.innerHTML = "Cvr: " + data.cvr;
+            addFooterNavEventListeners(data);
         }
         else
         {

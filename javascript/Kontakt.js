@@ -14,11 +14,16 @@ document.addEventListener("DOMContentLoaded", function () {
     callNavbarTemplate();
     callFooterTemplate();
 
+    let company = callCompanyInformation();
+
     var name = getParameterByName('name');
     var description = getParameterByName('description');
+    let phone = document.getElementById('phone_number');
+    phone.value = company.telephone;
 
     if (name !== null && description !== null) {
         // Set the inner text of the "about" element with the values from the query parameters
+
         document.getElementById("about").value = "Tilbud på " + name;
         document.getElementById("message").value = "Ønsket service: " + description;
     }
@@ -57,5 +62,23 @@ if (contactForm) {
                 console.log('An error occurred:', error);
             });
     });
+}
+
+async function callCompanyInformation() {
+    try {
+        const response = await fetch(globalURL+"/company")
+
+        if (response.ok)
+        {
+            return await response.json();
+        }
+        else
+        {
+            console.log ("Could not fetch data")
+        }
+        console.log(data);
+    } catch (error) {
+        console.error("Error:", error);
+    }
 }
 
